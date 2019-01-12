@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="182dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/sale"
+                android:src="@drawable/rent"
                 android:id="@+id/imageView"/>
         <TextView
                 android:id="@+id/rentals_text"
