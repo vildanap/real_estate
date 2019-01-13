@@ -27,8 +27,8 @@ public class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.MyVi
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Advertise movie = advertiseList.get(position);
-        holder.tvTitle.setText(movie.getTitle());
-        holder.tvRating.setText(movie.getRating());
+        holder.adTitle.setText(movie.getTitle());
+        holder.adPrice.setText(movie.getPrice());
         holder.imageView.setImageResource(R.drawable.sale);
         }
     @Override
@@ -40,15 +40,15 @@ public class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.MyVi
         return position;
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvTitle;
-        public TextView tvYear;
-        public TextView tvRating;
+        public TextView adTitle;
+        public TextView adDescription;
+        public TextView adPrice;
         public ImageView imageView;
         public MyViewHolder(View view) {
             super(view);
-            tvTitle = (TextView) view.findViewById(R.id.advertiseTitle);
-            tvYear = (TextView) view.findViewById(R.id.advertiseYear);
-            tvRating = (TextView) view.findViewById(R.id.tvRating);
+            adTitle = (TextView) view.findViewById(R.id.advertiseTitle);
+            adDescription = (TextView) view.findViewById(R.id.advertiseDescription);
+            adPrice = (TextView) view.findViewById(R.id.advertisePrice);
             imageView = (ImageView) view.findViewById(R.id.imageView);
         }
     }

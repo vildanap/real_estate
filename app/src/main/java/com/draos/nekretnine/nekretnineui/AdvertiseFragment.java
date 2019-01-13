@@ -3,6 +3,8 @@ package com.draos.nekretnine.nekretnineui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +33,8 @@ public class AdvertiseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Advertises");
 
         String cardClicked = getArguments().getString("ClickedCard");
 
@@ -70,10 +74,10 @@ public class AdvertiseFragment extends Fragment {
     public void getSalesList() {
     Advertise a = new Advertise();
     a.setTitle("Prvi sale");
-    a.setRating("5");
+    a.setPrice("500000KM");
     Advertise b = new Advertise();
     b.setTitle("Drugi sale");
-    b.setRating("5");
+    b.setPrice("100000KM");
     movieList.add(a);
     movieList.add(b);
     movieList.add(a);
@@ -83,10 +87,10 @@ public class AdvertiseFragment extends Fragment {
     public void getRentalsList() {
         Advertise a = new Advertise();
         a.setTitle("Prvi rental");
-        a.setRating("5");
+        a.setPrice("250KM");
         Advertise b = new Advertise();
         b.setTitle("Drugi rental");
-        b.setRating("5");
+        b.setPrice("500KM");
         movieList.add(a);
         movieList.add(b);
         movieList.add(a);

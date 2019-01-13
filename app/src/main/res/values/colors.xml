@@ -5,4 +5,6 @@
     <color name="colorAccent">#194b19</color>
     <color name="colorSwitch">#194b19</color>
     <color name="colorInfo">#4169E1</color>
+    <color name="colorRed">#FF0000	</color>
+
 </resources>

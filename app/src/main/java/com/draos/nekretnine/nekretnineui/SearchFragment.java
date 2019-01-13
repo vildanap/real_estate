@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 
 public class SearchFragment extends Fragment {
@@ -29,10 +30,16 @@ public class SearchFragment extends Fragment {
        // recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         Spinner cities = (Spinner) view.findViewById(R.id.spinnercities);
 
-        String[] items = new String[] { "Chai Latte", "Green Tea", "Black Tea" };
+        String[] items = new String[] { "Sarajevo", "Tuzla", "Mostar" };
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(),android.R.layout.simple_spinner_item, items);
         cities.setAdapter(adapter);
+
+        NumberPicker np = view.findViewById(R.id.numberPicker);
+
+        np.setMinValue(0);
+        np.setMaxValue(10);
+
         return view;
     }
 

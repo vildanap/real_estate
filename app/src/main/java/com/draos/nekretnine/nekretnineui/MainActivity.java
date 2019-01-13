@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements
         AdvertiseFragment.OnFragmentInteractionListener{
 
     private ActionBar toolbar;
-
+    private BottomNavigationView navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements
         fragmentTransaction.replace(R.id.frame_layout, HomeFragment.newInstance());
         fragmentTransaction.commit();
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -65,5 +65,13 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if(navigation.getSelectedItemId() == R.id.navigation_home){
+            super.onBackPressed();
+        }else{
+            navigation.setSelectedItemId(R.id.navigation_home);
+            toolbar.setTitle("Home");
+        }
+    }
 }

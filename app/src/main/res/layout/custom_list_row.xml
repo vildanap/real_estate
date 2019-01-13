@@ -16,27 +16,26 @@
             android:id="@+id/advertiseTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Movie Title"
-            android:textSize="16sp"
+            android:text="Advertise Title"
             app:layout_constraintTop_toTopOf="@+id/imageView"
-            android:layout_marginTop="0dp"
             app:layout_constraintLeft_toRightOf="@+id/imageView"
-            android:layout_marginLeft="17dp"/>
+            android:layout_marginLeft="17dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"/>
     <TextView
-            android:id="@+id/advertiseYear"
+            android:id="@+id/advertiseDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Release Year"
+            android:text="Advertise description"
             android:layout_marginTop="16dp"
-            android:textSize="12sp"
             app:layout_constraintTop_toBottomOf="@+id/advertiseTitle"
             app:layout_constraintLeft_toRightOf="@+id/imageView"
-            android:layout_marginLeft="17dp"/>
+            android:layout_marginLeft="17dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"/>
     <TextView
-            android:id="@+id/tvRating"
+            android:id="@+id/advertisePrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rating"
+            android:text="Price"
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"

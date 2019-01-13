@@ -10,7 +10,7 @@
             android:id="@+id/rentals_card"
             android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="210dp"
+            android:layout_height="wrap_content"
             android:clickable="true"
             card_view:cardElevation="10dp"
             card_view:cardCornerRadius="4dp"
@@ -29,7 +29,7 @@
                 android:layout_height="match_parent"
                 android:paddingTop="190dp"
                 android:text="@string/title_rentals"
-                android:textAppearance="@style/TextAppearance.AppCompat"/>
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
     </android.support.v7.widget.CardView>
 
     <!-- A CardView that contains a TextView -->
@@ -62,7 +62,7 @@
                 android:layout_below="@id/imageSales"
                 android:paddingTop="190dp"
                 android:text="@string/title_sales"
-                android:textAppearance="@style/TextAppearance.AppCompat"/>
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
     </android.support.v7.widget.CardView>
 
@@ -93,7 +93,7 @@
                 android:layout_below="@id/imageSales"
                 android:paddingTop="190dp"
                 android:text="@string/title_sales"
-                android:textAppearance="@style/TextAppearance.AppCompat"/>
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

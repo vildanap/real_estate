@@ -5,7 +5,7 @@ import java.util.List;
 public class Advertise {
     private String title;
     private String image;
-    private String rating;
+    private String price;
 
     public String getTitle() {
         return title;
@@ -19,11 +19,11 @@ public class Advertise {
     public void setImage(String image) {
         this.image = image;
     }
-    public String getRating() {
-        return rating;
+    public String getPrice() {
+        return price;
     }
-    public void setRating(String rating) {
-        this.rating = rating;
+    public void setPrice(String rating) {
+        this.price = rating;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Advertise {
         return "Movie{" +
                 "title='" + title + '\'' +
                 ", image='" + image + '\'' +
-                ", rating='" + rating + '\'' +
+                ", rating='" + price + '\'' +
                 '}';
     }
 }
