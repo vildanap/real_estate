@@ -29,6 +29,7 @@ public class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.MyVi
         Advertise movie = advertiseList.get(position);
         holder.adTitle.setText(movie.getTitle());
         holder.adPrice.setText(movie.getPrice());
+        holder.adArea.setText(String.valueOf(movie.getArea()) + " squares");
         holder.imageView.setImageResource(R.drawable.sale);
         }
     @Override
@@ -43,12 +44,14 @@ public class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.MyVi
         public TextView adTitle;
         public TextView adDescription;
         public TextView adPrice;
+        public TextView adArea;
         public ImageView imageView;
         public MyViewHolder(View view) {
             super(view);
             adTitle = (TextView) view.findViewById(R.id.advertiseTitle);
             adDescription = (TextView) view.findViewById(R.id.advertiseDescription);
             adPrice = (TextView) view.findViewById(R.id.advertisePrice);
+            adArea = (TextView) view.findViewById(R.id.advertiseArea);
             imageView = (ImageView) view.findViewById(R.id.imageView);
         }
     }

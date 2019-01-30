@@ -3,11 +3,38 @@
                                              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                                              android:layout_height="match_parent">
 
+
+    <Button
+            android:id="@+id/button_sortPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_keyboard_arrow_down"
+            android:textColor="#343232"
+            android:text="Price" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/button_sortArea"/>
+    <Button
+            android:id="@+id/button_sortArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_keyboard_arrow_down"
+            android:textColor="#343232"
+            android:text="Area" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_sortPrice" android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"/>
+
+
     <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="468dp" android:id="@+id/recycle_view" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            android:layout_height="455dp" android:id="@+id/recycle_view"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.0" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintTop_toBottomOf="@+id/button_sortPrice" app:layout_constraintVertical_bias="0.0"/>
 </android.support.constraint.ConstraintLayout>

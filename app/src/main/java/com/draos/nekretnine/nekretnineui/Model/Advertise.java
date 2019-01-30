@@ -6,6 +6,8 @@ public class Advertise {
     private String title;
     private String image;
     private String price;
+    private Float area;
+
 
     public String getTitle() {
         return title;
@@ -26,12 +28,11 @@ public class Advertise {
         this.price = rating;
     }
 
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "title='" + title + '\'' +
-                ", image='" + image + '\'' +
-                ", rating='" + price + '\'' +
-                '}';
+    public Float getArea() {
+        return area;
+    }
+
+    public void setArea(Float area) {
+        this.area = area;
     }
 }
