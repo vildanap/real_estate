@@ -1,6 +1,7 @@
 package com.draos.nekretnine.nekretnineui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements
         SearchFragment.OnFragmentInteractionListener,
         HomeFragment.OnFragmentInteractionListener,
+        FavouritesFragment.OnFragmentInteractionListener,
         AccountFragment.OnFragmentInteractionListener,
         AdvertiseFragment.OnFragmentInteractionListener{
 
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
         toolbar = getSupportActionBar();
         toolbar.setTitle("Home");
 
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements
                         break;
                     case R.id.navigation_favourites:
                         toolbar.setTitle("Favourites");
+                        fragment = FavouritesFragment.newInstance();
                         break;
                     case R.id.navigation_account:
                         toolbar.setTitle("Account");

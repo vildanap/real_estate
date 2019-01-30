@@ -17,7 +17,9 @@
             android:layout_width="match_parent"
             android:layout_height="210dp"
             android:src="@drawable/logo"
-            android:id="@+id/logo" tools:layout_editor_absoluteY="2dp" tools:layout_editor_absoluteX="0dp"/>
+            android:id="@+id/logo" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="2dp" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
     <EditText
             android:layout_width="285dp"
             android:layout_height="wrap_content"
@@ -50,6 +52,10 @@
             android:layout_marginStart="8dp" android:background="@color/colorPrimary"
             android:textColor="#ffff" app:layout_constraintHorizontal_bias="0.578"/>
 
+    <Button
+            android:text="Logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/logout"/>
     <CheckBox
             android:layout_width="289dp"
             android:layout_height="35dp"

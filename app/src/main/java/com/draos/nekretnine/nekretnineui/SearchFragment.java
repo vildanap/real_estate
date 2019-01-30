@@ -3,7 +3,6 @@ package com.draos.nekretnine.nekretnineui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 
+
 public class SearchFragment extends Fragment {
     private OnFragmentInteractionListener listener;
+
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -27,20 +28,22 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-       // recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        Spinner cities = (Spinner) view.findViewById(R.id.spinnercities);
 
-        String[] items = new String[] { "Sarajevo", "Tuzla", "Mostar" };
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(),android.R.layout.simple_spinner_item, items);
-        cities.setAdapter(adapter);
+            Spinner cities = (Spinner) view.findViewById(R.id.spinnercities);
 
-        NumberPicker np = view.findViewById(R.id.numberPicker);
+            String[] items = new String[]{"Sarajevo", "Tuzla", "Mostar"};
 
-        np.setMinValue(0);
-        np.setMaxValue(10);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, items);
+            cities.setAdapter(adapter);
 
-        return view;
+            NumberPicker np = view.findViewById(R.id.numberPicker);
+
+            np.setMinValue(0);
+            np.setMaxValue(10);
+
+            return view;
+
     }
 
     @Override
