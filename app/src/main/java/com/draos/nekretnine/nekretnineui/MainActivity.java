@@ -1,5 +1,7 @@
 package com.draos.nekretnine.nekretnineui;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +12,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements
@@ -17,15 +21,19 @@ public class MainActivity extends AppCompatActivity implements
         HomeFragment.OnFragmentInteractionListener,
         FavouritesFragment.OnFragmentInteractionListener,
         AccountFragment.OnFragmentInteractionListener,
-        AdvertiseFragment.OnFragmentInteractionListener{
+        AdvertiseFragment.OnFragmentInteractionListener,
+        LoggedUserFragment.OnFragmentInteractionListener,
+        SignUpFragment.OnFragmentInteractionListener{
 
     private ActionBar toolbar;
     private BottomNavigationView navigation;
+    SessionManager session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        session = new SessionManager(MainActivity.this);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         toolbar = getSupportActionBar();
@@ -54,8 +62,13 @@ public class MainActivity extends AppCompatActivity implements
                         fragment = FavouritesFragment.newInstance();
                         break;
                     case R.id.navigation_account:
-                        toolbar.setTitle("Account");
-                        fragment = AccountFragment.newInstance();
+                        if(session.isLoggedIn()){
+                        fragment = LoggedUserFragment.newInstance();
+                            toolbar.setTitle("Your Profile");}
+                        else {
+                            fragment = AccountFragment.newInstance();
+                            toolbar.setTitle("Account");
+                        }
                         break;
                 }
 
