@@ -8,7 +8,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.draos.nekretnine.nekretnineui"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -39,5 +39,9 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
 
     compile 'com.android.support:recyclerview-v7:28.0.0'
+    //seekbar
+    implementation 'com.appyvet:materialrangebar:1.4.4'
+    //numericupdown
+    implementation 'com.github.travijuu:numberpicker:1.0.7'
 
 }

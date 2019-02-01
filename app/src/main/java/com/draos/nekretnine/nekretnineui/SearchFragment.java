@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import com.appyvet.materialrangebar.RangeBar;
 
 
 public class SearchFragment extends Fragment {
@@ -33,14 +34,21 @@ public class SearchFragment extends Fragment {
             Spinner cities = (Spinner) view.findViewById(R.id.spinnercities);
 
             String[] items = new String[]{"Sarajevo", "Tuzla", "Mostar"};
-
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, items);
             cities.setAdapter(adapter);
 
-            NumberPicker np = view.findViewById(R.id.numberPicker);
-
-            np.setMinValue(0);
-            np.setMaxValue(10);
+        Spinner settlements = (Spinner) view.findViewById(R.id.spinnercities2);
+        String[] items2 = new String[]{"Pofalici", "Grbavica", "Ciglane"};
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, items2);
+        settlements.setAdapter(adapter2);
+        RangeBar rangeBar =  view.findViewById(R.id.rangebar1);
+        //Zato sto po defaultu dozvoljava samo 4 cifre, ovako citav broj prikaze
+        rangeBar.setPinTextFormatter(new RangeBar.PinTextFormatter() {
+            @Override
+            public String getText(String value) {
+                return value;
+            }
+        });
 
             return view;
 

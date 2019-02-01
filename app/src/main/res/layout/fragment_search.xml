@@ -3,96 +3,178 @@
                                              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                                              android:layout_height="match_parent">
 
-    <Switch
-            android:text="Sales    "
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/switchsales"
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/linearLayout3">
+        <TextView
+                android:text="Rentals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:id="@+id/textView6" android:layout_weight="1"/>
+        <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch2"
+                android:layout_weight="1"
+                android:layout_marginRight="20dp"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/linearLayout4">
+        <TextView
+                android:text="Sales"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:id="@+id/textView5" android:layout_weight="1"/>
+        <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:id="@+id/switch1" android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="1.0"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+        <TextView
+                android:text="Price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginTop="43dp"
+                android:id="@+id/textView3" android:layout_weight="1"/>
+        <com.appyvet.materialrangebar.RangeBar
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/rangebar1"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                app:mrb_rangeBar="true"
+                app:mrb_pinMaxFont="14sp"
+                app:mrb_pinMinFont="10sp"
+                app:mrb_rangeBarPaddingBottom="20dp"
+                app:mrb_selectorBoundaryColor="@color/colorPrimary"
+                app:mrb_selectorBoundarySize="2dp"
+                app:mrb_pinTextColor="#ffffff"
+                app:mrb_temporaryPins="true"
+                app:mrb_selectorSize="10dp"
+                app:mrb_tickEnd="200000"
+                app:mrb_tickInterval="1000"
+                app:mrb_tickStart="100"
+                app:mrb_tickColor="@color/colorPrimary"
+                app:mrb_connectingLineColors="@color/colorPrimary"
+                app:mrb_pinRadius="20dp"
+                app:mrb_rangeBar_rounded="true"
+                app:mrb_pinColor="@color/colorPrimaryDark"
+                android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:thumbTint="@color/colorPrimary"
-            android:checked="false"/>
-    <Switch
-            android:text="Rentals  "
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/switchrentals"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-            app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/switchsales"
-            android:thumbTint="@color/colorPrimary"
-            android:checked="true"/>
-    <Spinner
-            android:id="@+id/spinnercities"
-            android:layout_width="249dp"
-            android:layout_height="33dp"
-            app:layout_constraintTop_toBottomOf="@+id/switchrentals"
-            android:layout_marginTop="16dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="56dp"
-            android:layout_marginRight="56dp"/>
-    <TextView
-            android:text="Cities"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView6" app:layout_constraintEnd_toStartOf="@+id/spinnercities"
-            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/switchrentals" app:layout_constraintHorizontal_bias="0.0"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-    <TextView
-            android:text="Price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView7" android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-    <SeekBar
-            android:layout_width="249dp"
-            android:layout_height="32dp"
-            android:id="@+id/seekBar" app:layout_constraintStart_toEndOf="@+id/textView7"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-            app:layout_constraintHorizontal_bias="0.392" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/spinnercities"
-            android:thumbTint="@color/colorPrimary"/>
-    <TextView
-            android:text="Number of rooms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2" android:layout_marginTop="56dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/linearLayout5"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        <TextView
+                android:text="City"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:id="@+id/textView2" android:layout_weight="1"/>
+        <Spinner
+                android:id="@+id/spinnercities"
+                android:layout_width="150dp"
+                android:layout_height="33dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                tools:layout_editor_absoluteY="102dp"
+                android:layout_marginRight="20dp"/>
+    </LinearLayout>
 
-    <NumberPicker
-            android:id="@+id/numberPicker"
-            android:layout_width="39dp"
-            android:layout_height="87dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
-            android:layout_marginTop="4dp"
-            app:layout_constraintTop_toBottomOf="@+id/seekBar" app:layout_constraintHorizontal_bias="0.073"/>
-    <Button
-            android:text="Search"
-            android:layout_width="78dp"
-            android:layout_height="wrap_content" android:id="@+id/buttonSearch"
-            android:textColor="@color/colorPrimaryDark"
-            style="@style/Widget.AppCompat.Button.Small" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-            app:layout_constraintStart_toEndOf="@+id/buttonReset" android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp" android:layout_marginTop="132dp"
-            app:layout_constraintTop_toBottomOf="@+id/numberPicker" app:layout_constraintHorizontal_bias="0.0"
-    />
-    <Button
-            android:text="Reset"
-            android:layout_width="78dp"
-            android:textColor="@color/colorRed"
-            android:layout_height="wrap_content" android:id="@+id/buttonReset"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="200dp"
-            android:layout_marginStart="200dp" android:layout_marginTop="132dp"
-            app:layout_constraintTop_toBottomOf="@+id/numberPicker" style="@style/Widget.AppCompat.Button.Small"
-    />
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+        <Button
+                android:text="Reset"
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorRed"
+                android:layout_height="wrap_content" android:id="@+id/buttonReset"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button.Small"
+                android:layout_marginLeft="80dp"
+                tools:layout_editor_absoluteY="398dp"/>
+        <Button
+                android:text="Search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/buttonSearch"
+                android:textColor="@color/colorPrimaryDark"
+                style="@style/Widget.AppCompat.Button.Small" app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteY="398dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/linearLayout6">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/textView7" android:layout_weight="1"
+                android:text="Settlement"
+                android:textStyle="bold"/>
+        <Spinner
+                android:id="@+id/spinnercities2"
+                android:layout_width="200dp"
+                android:layout_height="33dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                tools:layout_editor_absoluteY="102dp"
+                android:layout_marginRight="20dp"
+        />
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="77dp"
+            tools:layout_editor_absoluteX="0dp" android:layout_marginTop="16dp"
+            xmlns:numberpicker="http://schemas.android.com/apk/res-auto"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout6" android:id="@+id/linearLayout7">
+        <TextView
+                android:text="Rooms"
+                android:textStyle="bold"
+                android:layout_height="wrap_content" android:id="@+id/textView8"
+                android:layout_marginTop="10dp" android:layout_weight="1" android:layout_width="wrap_content"/>
+        <com.travijuu.numberpicker.library.NumberPicker
+                android:id="@+id/number_picker"
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                numberpicker:min="0"
+                numberpicker:max="10"
+                numberpicker:value="-5"
+                numberpicker:unit="1"
+                numberpicker:focusable="false"
+                android:layout_marginRight="150dp"/>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
