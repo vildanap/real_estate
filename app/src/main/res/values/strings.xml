@@ -19,8 +19,13 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="password_show">Show password</string>
-    <string name="sign_up">Don\'t have an account yet?</string>
+    <string name="sign_up">"Don't have an account yet? "</string>
     <string name="account_username">Username</string>
+    <string name="account_name">Firstname</string>
+    <string name="account_surname">Lastname</string>
+    <string name="account_password">Password</string>
+    <string name="account_email">Email</string>
+    <string name="account_phone">e.g. +387 61 xxx xxx</string>
 
 
 </resources>
