@@ -8,11 +8,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.draos.nekretnine.nekretnineui.Model.User;
+import com.draos.nekretnine.nekretnineui.Services.RealEstateServiceGenerator;
+import com.draos.nekretnine.nekretnineui.Services.UserService;
+import okhttp3.ResponseBody;
 import org.w3c.dom.Text;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AccountFragment extends Fragment {
     private SearchFragment.OnFragmentInteractionListener listener;
@@ -62,10 +70,40 @@ public class AccountFragment extends Fragment {
                 // Retrieve the text entered from the EditText
                 pb.setVisibility(View.VISIBLE);
 
-                String usernametxt = username.getText().toString();
-                String passwordtxt = password.getText().toString();
-
-                if (usernametxt.equals("zerina") && passwordtxt.equals("123")) {
+               final String usernametxt = username.getText().toString();
+                final String passwordtxt = password.getText().toString();
+                UserService service = RealEstateServiceGenerator.createService(UserService.class);
+                User user = new User();
+                user.setUsername(usernametxt);
+                user.setPassword(passwordtxt);
+                final Call<ResponseBody> call = service.login(user);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(response.code()==201) {
+                            session.createLoginSession(usernametxt, passwordtxt);
+                            pb.setVisibility(View.INVISIBLE);
+                            //logoutbutton.setVisibility(View.VISIBLE);
+                            Toast.makeText(getContext(),
+                                    "Successfully logged in",
+                                    Toast.LENGTH_LONG).show();
+                            // open LoggedUser fragment
+                            LoggedUserFragment newfragment = new LoggedUserFragment();
+                            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            fragmentTransaction.replace(((ViewGroup) (getView().getParent())).getId(), newfragment);
+                            fragmentTransaction.commit();
+                        } else {
+                            System.out.println(response.errorBody());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(getContext(),
+                                t.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+       /*         if (usernametxt.equals("zerina") && passwordtxt.equals("123")) {
                     session.createLoginSession(usernametxt, passwordtxt);
                     pb.setVisibility(View.INVISIBLE);
                     //logoutbutton.setVisibility(View.VISIBLE);
@@ -77,7 +115,7 @@ public class AccountFragment extends Fragment {
                     FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(((ViewGroup) (getView().getParent())).getId(), newfragment);
                     fragmentTransaction.commit();
-                }
+                }*/
             }
         });
                signUp.setOnClickListener(new View.OnClickListener() {

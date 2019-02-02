@@ -16,6 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import com.draos.nekretnine.nekretnineui.Model.User;
+import com.draos.nekretnine.nekretnineui.Services.RealEstateServiceGenerator;
+import com.draos.nekretnine.nekretnineui.Services.UserService;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignUpFragment extends Fragment {
 
@@ -68,21 +75,42 @@ public class SignUpFragment extends Fragment {
             boolean validationResult = validate();
             if(validation==true && validationResult==true){
                 pb.setVisibility(View.VISIBLE);
-                Toast.makeText(getContext(),
-                        "Account successfully created. You can now login.",
-                        Toast.LENGTH_LONG).show();
-                try {
-                    Thread.sleep(2000); //1000 milliseconds is one second.
-                }
-                catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                }
-                AccountFragment newfragment = new AccountFragment();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                //fragmentTransaction.addToBackStack("Sign up");
-                fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
-                fragmentTransaction.commit();
+
+                String firstName = ed_name.getText().toString().trim();
+                String lastName = ed_surname.getText().toString().trim();
+                String username = ed_username.getText().toString().trim();
+                String password = ed_password.getText().toString().trim();
+                String email = ed_email.getText().toString().trim();
+                String telephone = ed_phone.getText().toString().trim();
+
+               User user = new User(username,password,firstName,lastName,email,telephone);
+               UserService service = RealEstateServiceGenerator.createService(UserService.class);
+                final Call<ResponseBody> call = service.createUser(user);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(response.code()==201) {
+                            Toast.makeText(getContext(),
+                                    "Account successfully created. You can now login.",
+                                    Toast.LENGTH_LONG).show();
+                            AccountFragment newfragment = new AccountFragment();
+                            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            //fragmentTransaction.addToBackStack("Sign up");
+                            fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
+                            fragmentTransaction.commit();
+                        } else {
+                            System.out.println(response.errorBody());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(getContext(),
+                                t.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
             }}
         });
 
