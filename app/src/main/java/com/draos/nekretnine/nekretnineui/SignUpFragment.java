@@ -80,7 +80,7 @@ public class SignUpFragment extends Fragment {
                 }
                 AccountFragment newfragment = new AccountFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.addToBackStack("Sign up");
+                //fragmentTransaction.addToBackStack("Sign up");
                 fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
                 fragmentTransaction.commit();
             }}

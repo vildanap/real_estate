@@ -87,11 +87,12 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        if(navigation.getSelectedItemId() == R.id.navigation_home){
+      /* if(navigation.getSelectedItemId() == R.id.navigation_home){
             super.onBackPressed();
         }else{
             navigation.setSelectedItemId(R.id.navigation_home);
             toolbar.setTitle("Home");
-        }
+        }*/
+        getSupportFragmentManager().popBackStack();
     }
 }
