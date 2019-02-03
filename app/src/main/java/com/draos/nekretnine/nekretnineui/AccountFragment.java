@@ -21,6 +21,7 @@ import org.w3c.dom.Text;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Body;
 
 public class AccountFragment extends Fragment {
     private SearchFragment.OnFragmentInteractionListener listener;
@@ -73,14 +74,14 @@ public class AccountFragment extends Fragment {
                final String usernametxt = username.getText().toString();
                 final String passwordtxt = password.getText().toString();
                 UserService service = RealEstateServiceGenerator.createService(UserService.class);
-                User user = new User();
+                final User user = new User();
                 user.setUsername(usernametxt);
                 user.setPassword(passwordtxt);
                 final Call<ResponseBody> call = service.login(user);
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if(response.code()==201) {
+                        if(response.isSuccessful()) {
                             session.createLoginSession(usernametxt, passwordtxt);
                             pb.setVisibility(View.INVISIBLE);
                             //logoutbutton.setVisibility(View.VISIBLE);
@@ -88,18 +89,24 @@ public class AccountFragment extends Fragment {
                                     "Successfully logged in",
                                     Toast.LENGTH_LONG).show();
                             // open LoggedUser fragment
+                            Bundle data = new Bundle();
+                            data.putString("username",usernametxt);
                             LoggedUserFragment newfragment = new LoggedUserFragment();
+                            newfragment.setArguments(data);
                             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                             fragmentTransaction.replace(((ViewGroup) (getView().getParent())).getId(), newfragment);
                             fragmentTransaction.commit();
                         } else {
-                            System.out.println(response.errorBody());
+                            System.out.println("Greskaaa "+response.message());
+                            Toast.makeText(getContext(),
+                                    response.message().toString(),
+                                    Toast.LENGTH_LONG).show();
                         }
                     }
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Toast.makeText(getContext(),
-                                t.getMessage(),
+                                "nestooooo",
                                 Toast.LENGTH_LONG).show();
                     }
                 });

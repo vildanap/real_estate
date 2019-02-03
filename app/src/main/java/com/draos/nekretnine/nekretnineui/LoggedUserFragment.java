@@ -25,12 +25,13 @@ public class LoggedUserFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Session class instance
         session = new SessionManager(this.getContext());
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        final Bundle extras = getArguments();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Your Profile");
 
         View view = inflater.inflate(R.layout.fragment_loggeduser, container, false);

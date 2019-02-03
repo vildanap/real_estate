@@ -1,6 +1,8 @@
 package com.draos.nekretnine.nekretnineui.Services;
 
 
+import android.text.TextUtils;
+import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -22,4 +24,5 @@ public class RealEstateServiceGenerator {
     public static <S> S createService(Class<S> serviceClass) {
         return retrofit.create(serviceClass);
     }
+
 }
