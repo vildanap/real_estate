@@ -1,7 +1,10 @@
 package com.draos.nekretnine.nekretnineui;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +56,26 @@ public class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.MyVi
             adPrice = (TextView) view.findViewById(R.id.advertisePrice);
             adArea = (TextView) view.findViewById(R.id.advertiseArea);
             imageView = (ImageView) view.findViewById(R.id.imageView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.i("Item Click Position", String.valueOf(getLayoutPosition()));
+                    Advertise a = advertiseList.get(getLayoutPosition());
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", a.getTitle());
+                    bundle.putString("price", a.getPrice());
+
+                    AdvertiseDetailsFragment advertiseDetails = new AdvertiseDetailsFragment();
+                    advertiseDetails.setArguments(bundle);
+
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, advertiseDetails,"Tag_Advertises")
+                            .addToBackStack("Tag_Advertises")
+                            .commitAllowingStateLoss();
+                }
+            });
         }
     }
 }

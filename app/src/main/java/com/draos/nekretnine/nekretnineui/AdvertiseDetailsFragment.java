@@ -9,13 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class FavouritesFragment extends Fragment {
-
-    private FavouritesFragment.OnFragmentInteractionListener listener;
+public class AdvertiseDetailsFragment extends Fragment {
+    private AdvertiseDetailsFragment.OnFragmentInteractionListener listener;
     SessionManager session;
 
-    public static FavouritesFragment newInstance() {
-        return new FavouritesFragment();
+    public static AdvertiseDetailsFragment newInstance() {
+        return new AdvertiseDetailsFragment();
     }
 
     @Override
@@ -28,27 +27,27 @@ public class FavouritesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Favourites");
 
-        View view = inflater.inflate(R.layout.fragment_favourites, container, false);
+        View view = inflater.inflate(R.layout.fragment_advertise_details, container, false);
+        TextView adTitle = view.findViewById(R.id.textView_adTitle);
+        Bundle bundle = this.getArguments();
+        if(bundle != null) {
+            String title = bundle.get("title").toString();
+            String author = bundle.get("price").toString();
+            adTitle.setText(title);
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
 
-        TextView tv = (TextView) view.findViewById(R.id.tvFavourites);
-
-        if (!session.isLoggedIn()) {
-            tv.setText("Please log in to see Favourites.");
         }
-        else{
-            tv.setText("Favourites");
-        }
 
-            return view;
+
+               return view;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof FavouritesFragment.OnFragmentInteractionListener) {
-            listener = (FavouritesFragment.OnFragmentInteractionListener) context;
+        if (context instanceof AdvertiseDetailsFragment.OnFragmentInteractionListener) {
+            listener = (AdvertiseDetailsFragment.OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -63,6 +62,5 @@ public class FavouritesFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
     }
-
 
 }

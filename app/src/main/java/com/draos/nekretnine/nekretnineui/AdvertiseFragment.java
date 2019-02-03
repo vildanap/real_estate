@@ -40,6 +40,11 @@ public class AdvertiseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String cardClicked = getArguments().getString("ClickedCard");
+        if(cardClicked.equals("sales")) {
+            getSalesList();
+        }
+        else{ getRentalsList();}
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,7 +52,6 @@ public class AdvertiseFragment extends Fragment {
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Advertises");
 
-        String cardClicked = getArguments().getString("ClickedCard");
 
         View view = inflater.inflate(R.layout.fragment_advertise, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycle_view);
@@ -63,10 +67,7 @@ public class AdvertiseFragment extends Fragment {
         btnPrice = view.findViewById(R.id.button_sortPrice);
         btnArea = view.findViewById(R.id.button_sortArea);
 
-        if(cardClicked.equals("sales")) {
-            getSalesList();
-        }
-        else{ getRentalsList();}
+
 
         btnPrice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +122,7 @@ public class AdvertiseFragment extends Fragment {
         super.onDetach();
         listener = null;
     }
+
 
     //TODO retrofit getSales
     public void getSalesList() {

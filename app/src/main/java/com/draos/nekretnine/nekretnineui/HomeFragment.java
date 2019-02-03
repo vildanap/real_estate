@@ -24,6 +24,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Home");
+
         // recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         CardView sales = (CardView) view.findViewById(R.id.sales_card);
         CardView rentals = (CardView) view.findViewById(R.id.rentals_card);
@@ -57,7 +59,7 @@ public class HomeFragment extends Fragment {
 
                 //Inflate the fragment
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).addToBackStack(null).commitAllowingStateLoss();
 
             }
         });

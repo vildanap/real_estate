@@ -37,6 +37,8 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Search");
+
         //Fields
         sales = view.findViewById(R.id.switch1);
         rentals = view.findViewById(R.id.switch2);
