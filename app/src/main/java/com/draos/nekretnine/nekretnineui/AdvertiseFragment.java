@@ -16,6 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.draos.nekretnine.nekretnineui.Model.Advertise;
+import com.draos.nekretnine.nekretnineui.Model.City;
+import com.draos.nekretnine.nekretnineui.Model.Location;
+import com.draos.nekretnine.nekretnineui.Model.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -126,32 +129,33 @@ public class AdvertiseFragment extends Fragment {
 
     //TODO retrofit getSales
     public void getSalesList() {
-    Advertise a = new Advertise();
-    a.setTitle("Prvi sale");
-    a.setPrice("500000KM");
-    a.setArea(Float.valueOf("100"));
-    Advertise b = new Advertise();
-    b.setTitle("Drugi sale");
-    b.setPrice("100000KM");
-    b.setArea(Float.valueOf("80"));
-    advertiseList.add(a);
-    advertiseList.add(b);
-    advertiseList.add(a);
+        User u= new User("Zerina","1234","Zerina","Dragnic","zdragnic@gmail.com","+38762554678");
+        City c = new City("Sarajevo");
+        Location l = new Location("Pofalici",c);
+        Advertise a = new Advertise("Sale","Opis opis",6000,87.87,"Sale","House",23,3,"Avde Hume",u,l);
+        Advertise b = new Advertise("Sale","Opis opis",100,80,"Sale","House",23,3,"Avde Hume",u,l);
+        Advertise d = new Advertise("Sale","Opis opis",5000,40,"Sale","House",23,3,"Avde Hume",u,l);
+
+        advertiseList.add(a);
+        advertiseList.add(b);
+        advertiseList.add(d);
+
+
     }
 
     //TODO retrofit getRentals
     public void getRentalsList() {
-        Advertise a = new Advertise();
-        a.setTitle("Prvi rental");
-        a.setPrice("250KM");
-        a.setArea(Float.valueOf("100"));
-        Advertise b = new Advertise();
-        b.setTitle("Drugi rental");
-        b.setPrice("500KM");
-        b.setArea(Float.valueOf("80"));
+        User u= new User("Zerina","1234","Zerina","Dragnic","zdragnic@gmail.com","+38762554678");
+        City c = new City("Sarajevo");
+        Location l = new Location("Pofalici",c);
+        Advertise a = new Advertise("Rental","Opis opis",6000,87.87,"Rental","House",23,3,"Avde Hume",u,l);
+        Advertise b = new Advertise("Rental","Opis opis",100,80,"Rental","House",23,3,"Avde Hume",u,l);
+        Advertise d = new Advertise("Rental","Opis opis",5000,40,"Rental","House",23,3,"Avde Hume",u,l);
+
         advertiseList.add(a);
         advertiseList.add(b);
-        advertiseList.add(a);
+        advertiseList.add(d);
+
     }
     //TODO search results
 
@@ -163,7 +167,7 @@ public class AdvertiseFragment extends Fragment {
         {
             Collections.sort(advertiseList, new Comparator<Advertise>() {
                 public int compare(Advertise a1, Advertise a2) {
-                    return a1.getPrice().compareTo(a2.getPrice());
+                    return String.valueOf(a1.getPrice()).compareTo(String.valueOf(a2.getPrice()));
                 }
             });
         }
@@ -172,10 +176,6 @@ public class AdvertiseFragment extends Fragment {
             Collections.reverse(advertiseList);
         }
         advertiseAdapter = new AdvertiseAdapter(advertiseList, getActivity());
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(advertiseAdapter);
     }
     //Sort
@@ -186,7 +186,7 @@ public class AdvertiseFragment extends Fragment {
         {
             Collections.sort(advertiseList, new Comparator<Advertise>() {
                 public int compare(Advertise a1, Advertise a2) {
-                    return a1.getArea().compareTo(a2.getArea());
+                    return String.valueOf(a1.getArea()).compareTo(String.valueOf(a2.getArea()));
                 }
             });
         }
@@ -195,10 +195,6 @@ public class AdvertiseFragment extends Fragment {
             Collections.reverse(advertiseList);
         }
         advertiseAdapter = new AdvertiseAdapter(advertiseList, getActivity());
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(advertiseAdapter);
     }
 

@@ -31,7 +31,7 @@ public class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.MyVi
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Advertise movie = advertiseList.get(position);
         holder.adTitle.setText(movie.getTitle());
-        holder.adPrice.setText(movie.getPrice());
+        holder.adPrice.setText(String.valueOf(movie.getPrice()));
         holder.adArea.setText(String.valueOf(movie.getArea()) + " squares");
         holder.imageView.setImageResource(R.drawable.sale);
         }
@@ -64,8 +64,8 @@ public class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.MyVi
                     Advertise a = advertiseList.get(getLayoutPosition());
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("title", a.getTitle());
-                    bundle.putString("price", a.getPrice());
+                    bundle.putString("title", String.valueOf(a.getTitle()));
+                    bundle.putString("price", String.valueOf(a.getPrice()));
 
                     AdvertiseDetailsFragment advertiseDetails = new AdvertiseDetailsFragment();
                     advertiseDetails.setArguments(bundle);

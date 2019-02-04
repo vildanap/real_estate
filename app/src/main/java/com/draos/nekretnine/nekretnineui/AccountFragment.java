@@ -77,7 +77,7 @@ public class AccountFragment extends Fragment {
                 final User user = new User();
                 user.setUsername(usernametxt);
                 user.setPassword(passwordtxt);
-                final Call<ResponseBody> call = service.login(user);
+               final Call<ResponseBody> call = service.login(user);
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -112,7 +112,7 @@ public class AccountFragment extends Fragment {
                         pb.setVisibility(View.INVISIBLE);
                     }
                 });
-       /*         if (usernametxt.equals("zerina") && passwordtxt.equals("123")) {
+             /* if (usernametxt.equals("zerina") && passwordtxt.equals("123")) {
                     session.createLoginSession(usernametxt, passwordtxt);
                     pb.setVisibility(View.INVISIBLE);
                     //logoutbutton.setVisibility(View.VISIBLE);

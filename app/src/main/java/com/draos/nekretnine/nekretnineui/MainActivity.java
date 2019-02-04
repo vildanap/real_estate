@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity implements
         LoggedUserFragment.OnFragmentInteractionListener,
         SignUpFragment.OnFragmentInteractionListener,
         AdvertiseDetailsFragment.OnFragmentInteractionListener,
-        EditProfileFragment.OnFragmentInteractionListener{
+        EditProfileFragment.OnFragmentInteractionListener,
+        AdvertCreateFragment.OnFragmentInteractionListener{
 
     private ActionBar toolbar;
     private BottomNavigationView navigation;

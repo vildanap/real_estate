@@ -37,6 +37,8 @@ public class LoggedUserFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_loggeduser, container, false);
         final Button logoutbutton = view.findViewById(R.id.button2);
         final Button editProfile = view.findViewById(R.id.button11);
+        final Button createADbutton = view.findViewById(R.id.button9);
+
         logoutbutton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -53,6 +55,17 @@ public class LoggedUserFragment extends Fragment {
             public void onClick(View arg0) {
 
                 EditProfileFragment newfragment = new EditProfileFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+        createADbutton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View arg0) {
+
+                AdvertCreateFragment newfragment = new AdvertCreateFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
                 fragmentTransaction.commit();
