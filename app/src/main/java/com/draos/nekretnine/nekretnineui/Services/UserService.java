@@ -16,11 +16,13 @@ public interface UserService {
     Call<List<User>> all();
     @GET("users/find/{userId}")
     Call<User> getUser(@Path("userId") long id);
+    @GET("users/{username}")
+    Call<User> getUserByUsername(@Path("username") String username);
     @POST("users/new")
     Call<ResponseBody> createUser(@Body User user);
     @POST("users/login")
     Call<ResponseBody> login(@Body User user);
-    @PUT("users/{userId}")
-    Call<ResponseBody> updateUser(@Path("userId") long id, @Body User user);
+    @PUT("users/{username}")
+    Call<ResponseBody> updateUser(@Path("username") String username, @Body User user);
 
 }

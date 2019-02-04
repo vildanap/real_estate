@@ -97,17 +97,19 @@ public class AccountFragment extends Fragment {
                             fragmentTransaction.replace(((ViewGroup) (getView().getParent())).getId(), newfragment);
                             fragmentTransaction.commit();
                         } else {
-                            System.out.println("Greskaaa "+response.message());
+                            System.out.println(response.message());
                             Toast.makeText(getContext(),
-                                    response.message().toString(),
+                                    "Username or password not correct",
                                     Toast.LENGTH_LONG).show();
+                            pb.setVisibility(View.INVISIBLE);
                         }
                     }
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Toast.makeText(getContext(),
-                                "nestooooo",
+                                "An error has ocurred.Try again.",
                                 Toast.LENGTH_LONG).show();
+                        pb.setVisibility(View.INVISIBLE);
                     }
                 });
        /*         if (usernametxt.equals("zerina") && passwordtxt.equals("123")) {

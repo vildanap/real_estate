@@ -36,7 +36,7 @@ public class LoggedUserFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_loggeduser, container, false);
         final Button logoutbutton = view.findViewById(R.id.button2);
-
+        final Button editProfile = view.findViewById(R.id.button11);
         logoutbutton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -48,16 +48,17 @@ public class LoggedUserFragment extends Fragment {
             }
         });
 
-     /*   TextView tv = (TextView) view.findViewById(R.id.tvFavourites);
+        editProfile.setOnClickListener(new View.OnClickListener() {
 
-        if (!session.isLoggedIn()) {
-            tv.setText("Please log in to see Favourites.");
-        }
-        else{
-            tv.setText("Favourites");
-        }
-*/
-        return view;
+            public void onClick(View arg0) {
+
+                EditProfileFragment newfragment = new EditProfileFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
+                fragmentTransaction.commit();
+            }
+        });
+      return view;
     }
 
 

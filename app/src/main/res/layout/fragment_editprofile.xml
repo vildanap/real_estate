@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content" tools:layout_editor_absoluteY="8dp" tools:layout_editor_absoluteX="8dp"
+            android:id="@+id/linearLayout2">
+
+        <android.support.design.widget.TextInputLayout
+                android:id="@+id/name_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <EditText
+                    android:id="@+id/ed_name2"
+                    android:layout_width="285dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="* Name"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+                android:id="@+id/surname_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true">
+
+            <EditText
+                    android:id="@+id/ed_surname2"
+                    android:layout_width="285dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="* Surname"/>
+
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+                android:id="@+id/username_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true">
+
+            <EditText
+                    android:id="@+id/ed_username2"
+                    android:layout_width="285dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="* Username"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+                android:id="@+id/password_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true">
+
+            <EditText
+                    android:id="@+id/ed_password2"
+                    android:layout_width="285dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:hint="* Old Password"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+                android:id="@+id/passwordnew_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true">
+
+            <EditText
+                    android:id="@+id/ed_passwordnew"
+                    android:layout_width="285dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:hint="New password"/>
+
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+                android:id="@+id/passwordRetype_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true">
+
+            <EditText
+                    android:id="@+id/ed_passwordRetype2"
+                    android:layout_width="285dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:hint="Re-type new password"/>
+
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+                android:id="@+id/email_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true">
+
+            <EditText
+                    android:id="@+id/ed_email2"
+                    android:layout_width="285dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:hint="* Email"/>
+
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+                android:id="@+id/phone_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true">
+
+            <EditText
+                    android:id="@+id/ed_phone2"
+                    android:layout_width="285dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:hint="* e.g. +38761xxxxxx"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+    <Button
+            android:id="@+id/buttonsave"
+            android:layout_width="285dp"
+            android:layout_height="38dp"
+            android:textColor="#FFFFFF"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentBottom="true"
+            android:text="SAVE CHANGES" android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" android:layout_marginRight="8dp" app:layout_constraintHorizontal_bias="0.506"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" app:layout_constraintVertical_bias="1.0"/>
+    <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="148dp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:ems="10"
+            tools:layout_editor_absoluteY="372dp" tools:layout_editor_absoluteX="50dp" android:id="@+id/oldpassword"
+            android:visibility="invisible"/>
+</android.support.constraint.ConstraintLayout>
