@@ -36,9 +36,10 @@ public class EditProfileFragment extends Fragment {
         // Session class instance
         session = new SessionManager(this.getContext());
     }
-    EditText ed_email,ed_password,ed_name,ed_surname,ed_username,ed_phone,ed_passwordRetype,ed_passwordnew,oldpassword;
+    EditText ed_email,ed_password,ed_name,ed_surname,ed_username,ed_phone,ed_passwordRetype,ed_passwordnew,oldpassword,oldusername;
     TextInputLayout email_layout,password_layout,name_layout,surname_layout,username_layout,phone_layout,passwordRetype_layout,passwordnew_layout2;
     final String oldpass=null;
+    final String olduser = null;
     boolean validation =true;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +50,7 @@ public class EditProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_editprofile, container, false);
         final Button buttonsave = view.findViewById(R.id.buttonsave);
         oldpassword = view.findViewById(R.id.oldpassword);
+        oldusername = view.findViewById(R.id.oldusername);
         ed_name =  view.findViewById(R.id.ed_name2);
          ed_surname =  view.findViewById(R.id.ed_surname2);
          ed_username =  view.findViewById(R.id.ed_username2);
@@ -78,6 +80,7 @@ public class EditProfileFragment extends Fragment {
                    ed_surname.setText(response.body().getLastName());
                    ed_username.setText(response.body().getUsername());
                    oldpassword.setText(response.body().getPassword());
+                   oldusername.setText(response.body().getUsername());
                    ed_email.setText(response.body().getEmail());
                    ed_phone.setText(response.body().getTelephone());
                 } else {
@@ -270,12 +273,24 @@ public class EditProfileFragment extends Fragment {
 
             public void onClick(View arg0) {
 
-                boolean validationResult = validate();
-                String pass=ed_password.getText().toString();
+                final boolean validationResult = validate();
+                final String pass=ed_password.getText().toString();
+                final String usernameCreated = oldusername.getText().toString();
+                final User userEdited = new User();
+                userEdited.setUsername(ed_username.getText().toString());
+                UserService service1 = RealEstateServiceGenerator.createService(UserService.class);
+
+                if(!(userEdited.getUsername().equals(oldusername.getText().toString()))){
+                final Call<User> call1 = service1.getUserByUsername(userEdited.getUsername());
+                call1.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        if(!response.isSuccessful()) {
+                            pb.setVisibility(View.VISIBLE);
                 if(validation==true && validationResult==true && oldpassword.getText().toString().equals(pass)){
                     pb.setVisibility(View.VISIBLE);
-
-                    final User user = new User();
+                        editCall();
+          /*          final User user = new User();
                     user.setFirstName(ed_name.getText().toString());
                     user.setLastName(ed_surname.getText().toString());
                     user.setUsername(ed_username.getText().toString());
@@ -285,8 +300,8 @@ public class EditProfileFragment extends Fragment {
                     user.setEmail(ed_email.getText().toString());
                     user.setTelephone(ed_phone.getText().toString());
                     UserService service = RealEstateServiceGenerator.createService(UserService.class);
-                    final Call<ResponseBody> call = service.updateUser(username,user);
-                    call.enqueue(new Callback<ResponseBody>() {
+                    final Call<ResponseBody> callUpdate = service.updateUser(username,user);
+                    callUpdate.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if(response.code()==200) {
@@ -307,12 +322,43 @@ public class EditProfileFragment extends Fragment {
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
                            // textView.setText("Something went wrong: " + t.getMessage());
                         }
-                    });
+                    });*/
                     }
                     else {
                     Toast.makeText(getContext(),
                             "Password you entered is not correct",
                             Toast.LENGTH_LONG).show();
+                    pb.setVisibility(View.INVISIBLE);
+                    }
+                        }
+                    else {
+                            System.out.println(response.message());
+                            Toast.makeText(getContext(),
+                                    "User with username '"+ed_username.getText().toString()+"' exists. Try with other username.",
+                                    Toast.LENGTH_LONG).show();
+                            ed_username.requestFocus();
+                            pb.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        Toast.makeText(getContext(),
+                                "An error has ocurred.Try again.",
+                                Toast.LENGTH_LONG).show();
+                        pb.setVisibility(View.INVISIBLE);
+                    }
+                });}
+                else {
+                    pb.setVisibility(View.VISIBLE);
+                    if(validation==true && validationResult==true && oldpassword.getText().toString().equals(pass)){
+                        pb.setVisibility(View.VISIBLE);
+                        editCall(); }
+                    else {
+                        Toast.makeText(getContext(),
+                                "Password you entered is not correct",
+                                Toast.LENGTH_LONG).show();
+                        pb.setVisibility(View.INVISIBLE);
+                    }
                 }
                 }});
 
@@ -434,6 +480,43 @@ public class EditProfileFragment extends Fragment {
             validation=false;}
 
         return  validation;
+    }
+
+    public void editCall ()
+    {
+        final User user = new User();
+        user.setFirstName(ed_name.getText().toString());
+        user.setLastName(ed_surname.getText().toString());
+        user.setUsername(ed_username.getText().toString());
+        if(ed_passwordnew.getText().toString().isEmpty())
+            user.setPassword(ed_password.getText().toString());
+        else user.setPassword(ed_passwordnew.getText().toString());
+        user.setEmail(ed_email.getText().toString());
+        user.setTelephone(ed_phone.getText().toString());
+        UserService service = RealEstateServiceGenerator.createService(UserService.class);
+        final Call<ResponseBody> callUpdate = service.updateUser(oldusername.getText().toString(),user);
+        callUpdate.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code()==200) {
+
+                    Toast.makeText(getContext(),
+                            "Account successfully edited",
+                            Toast.LENGTH_LONG).show();
+                    session.createLoginSession(user.getUsername(),user.getPassword());
+                    LoggedUserFragment newfragment = new LoggedUserFragment();
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(((ViewGroup) (getView().getParent())).getId(), newfragment);
+                    fragmentTransaction.commit();
+                } else {
+                    System.out.println(response.errorBody());
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // textView.setText("Something went wrong: " + t.getMessage());
+            }
+        });
     }
     @Override
     public void onAttach(Context context) {

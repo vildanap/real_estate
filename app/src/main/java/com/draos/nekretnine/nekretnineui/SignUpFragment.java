@@ -74,7 +74,7 @@ public class SignUpFragment extends Fragment {
 
             boolean validationResult = validate();
             if(validation==true && validationResult==true){
-                pb.setVisibility(View.VISIBLE);
+
 
                 String firstName = ed_name.getText().toString().trim();
                 String lastName = ed_surname.getText().toString().trim();
@@ -83,32 +83,59 @@ public class SignUpFragment extends Fragment {
                 String email = ed_email.getText().toString().trim();
                 String telephone = ed_phone.getText().toString().trim();
 
-               User user = new User(username,password,firstName,lastName,email,telephone);
-               UserService service = RealEstateServiceGenerator.createService(UserService.class);
-                final Call<ResponseBody> call = service.createUser(user);
-                call.enqueue(new Callback<ResponseBody>() {
+                final User user = new User(username,password,firstName,lastName,email,telephone);
+                UserService service1 = RealEstateServiceGenerator.createService(UserService.class);
+                final Call<User> call1 = service1.getUserByUsername(username);
+                call1.enqueue(new Callback<User>() {
                     @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if(response.code()==201) {
-                            Toast.makeText(getContext(),
-                                    "Account successfully created. You can now login.",
-                                    Toast.LENGTH_LONG).show();
-                            AccountFragment newfragment = new AccountFragment();
-                            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                            //fragmentTransaction.addToBackStack("Sign up");
-                            fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
-                            fragmentTransaction.commit();
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        if(!response.isSuccessful()) {
+                            pb.setVisibility(View.VISIBLE);
+
+                            UserService service = RealEstateServiceGenerator.createService(UserService.class);
+                            final Call<ResponseBody> callCreate = service.createUser(user);
+                            callCreate.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if(response.code()==201) {
+                                        Toast.makeText(getContext(),
+                                                "Account successfully created. You can now login.",
+                                                Toast.LENGTH_LONG).show();
+                                        AccountFragment newfragment = new AccountFragment();
+                                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                        //fragmentTransaction.addToBackStack("Sign up");
+                                        fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
+                                        fragmentTransaction.commit();
+                                    } else {
+                                        System.out.println(response.errorBody());
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    Toast.makeText(getContext(),
+                                            t.getMessage(),
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            });
+
                         } else {
-                            System.out.println(response.errorBody());
+                            System.out.println(response.message());
+                            Toast.makeText(getContext(),
+                                    "User with username '"+ed_username.getText().toString()+"' exists. Try with other username.",
+                                    Toast.LENGTH_LONG).show();
+                            ed_username.requestFocus();
+                            pb.setVisibility(View.INVISIBLE);
                         }
                     }
                     @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    public void onFailure(Call<User> call, Throwable t) {
                         Toast.makeText(getContext(),
-                                t.getMessage(),
+                                "An error has ocurred.Try again.",
                                 Toast.LENGTH_LONG).show();
+                        pb.setVisibility(View.INVISIBLE);
                     }
                 });
+
 
 
             }}

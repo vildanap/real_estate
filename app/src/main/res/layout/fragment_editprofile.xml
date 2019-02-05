@@ -164,4 +164,11 @@
             android:ems="10"
             tools:layout_editor_absoluteY="372dp" tools:layout_editor_absoluteX="50dp" android:id="@+id/oldpassword"
             android:visibility="invisible"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            tools:layout_editor_absoluteY="418dp" tools:layout_editor_absoluteX="50dp" android:id="@+id/oldusername"
+            android:visibility="invisible"/>
 </android.support.constraint.ConstraintLayout>
