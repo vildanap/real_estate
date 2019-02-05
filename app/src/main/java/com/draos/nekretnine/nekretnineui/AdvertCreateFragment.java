@@ -45,6 +45,7 @@ public class AdvertCreateFragment extends Fragment {
     EditText price;
     EditText area;
     EditText address;
+    Button btnReset;
 
 
     public static AdvertCreateFragment newInstance() {
@@ -118,7 +119,15 @@ public class AdvertCreateFragment extends Fragment {
             }
         });
 
+        btnReset = view.findViewById(R.id.buttonResetAdvert);
         //TODO Upload slika
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
         //create advert
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,47 +145,27 @@ public class AdvertCreateFragment extends Fragment {
                 RequestBody attachmentEmpty = RequestBody.create(MediaType.parse("image/jpeg"), "");
                 MultipartBody.Part body = MultipartBody.Part.createFormData("files", "", attachmentEmpty);
 
-                //TODO userId,locationId
-                try {
-                   JSONObject ad = new JSONObject();
-                   ad.put("title", title.getText().toString());
-                   ad.put("description", description.getText().toString());
-                   ad.put("advertType",spinnerAdvertType.getSelectedItem().toString());
-                   ad.put("propertyType",spinnerPropertyType.getSelectedItem().toString());
-                   ad.put("price",Double.valueOf(price.getText().toString()));
-                   ad.put("area",Double.valueOf(area.getText().toString()));
-                   ad.put("locationId",1);
-                   ad.put("userId",1);
-                   ad.put("address",address.getText().toString());
-                   ad.put("viewsCount",0);
-                   ad.put("numberOfRooms",rooms.getValue());
+                Fragment fragment =  new UploadImagesFragment();
+                //Put the values
+                Bundle args = new Bundle();
+                args.putString("title", title.getText().toString());
+                args.putString("description", description.getText().toString());
+                args.putString("advertType",spinnerAdvertType.getSelectedItem().toString());
+                args.putString("propertyType",spinnerPropertyType.getSelectedItem().toString());
+                args.putDouble("price",Double.valueOf(price.getText().toString()));
+                args.putDouble("area",Double.valueOf(area.getText().toString()));
+                args.putLong("locationId",1);
+                args.putLong("userId",1);
+                args.putString("address",address.getText().toString());
+                args.putLong("viewsCount",0);
+                args.putLong("numberOfRooms",rooms.getValue());
 
-                   AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
-                   final Call<ResponseBody> call = service.createAdvert(body,RequestBody.create(MediaType.parse("multipart/form-data"), ad.toString()));
-                   call.enqueue(new Callback<ResponseBody>() {
-                       @Override
-                       public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                           if (response.code() == 201) {
-                               Toast.makeText(getContext(),
-                                       "Advert successfully created.",
-                                       Toast.LENGTH_LONG).show();
-                           } else {
-                               System.out.println(response.errorBody());
-                           }
-                       }
+                fragment.setArguments(args);
 
-                       @Override
-                       public void onFailure(Call<ResponseBody> call, Throwable t) {
-                           Toast.makeText(getContext(),
-                                   t.getMessage(),
-                                   Toast.LENGTH_LONG).show();
-                       }
-                   });
+                //Inflate the fragment
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment,"Advert").addToBackStack("Advert").commitAllowingStateLoss();
 
-               }
-               catch (JSONException e) {
-                   e.printStackTrace();
-               }
             }
         });
 

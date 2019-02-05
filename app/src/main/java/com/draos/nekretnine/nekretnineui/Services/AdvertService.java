@@ -16,6 +16,9 @@ public interface AdvertService {
     Call<Advertise> getAdvertise(@Path("advertId") long id);
     @Multipart
     @POST("adverts/post")
-    Call<ResponseBody> createAdvert(@Part MultipartBody.Part image, @Part("formDataJson") RequestBody formDataJson);
+    Call<ResponseBody> createAdvert(@Part List<MultipartBody.Part> images, @Part("formDataJson") RequestBody formDataJson);
+    @Multipart
+    @POST("/uploadFile")
+    Call<ResponseBody> postImage(@Part List<MultipartBody.Part> images);
 
 }
