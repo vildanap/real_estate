@@ -21,7 +21,7 @@ public interface UserService {
     @POST("users/new")
     Call<ResponseBody> createUser(@Body User user);
     @POST("users/login")
-    Call<ResponseBody> login(@Body User user);
+    Call<User> login(@Body User user);
     @PUT("users/{username}")
     Call<ResponseBody> updateUser(@Path("username") String username, @Body User user);
 

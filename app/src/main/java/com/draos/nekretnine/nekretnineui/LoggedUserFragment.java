@@ -31,8 +31,9 @@ public class LoggedUserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final Bundle extras = getArguments();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Your Profile");
+       final Bundle extras = getArguments();
+       final long d = extras.getLong("id");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Long.valueOf(d).toString());
 
         View view = inflater.inflate(R.layout.fragment_loggeduser, container, false);
         final Button logoutbutton = view.findViewById(R.id.button2);

@@ -77,10 +77,10 @@ public class AccountFragment extends Fragment {
                 final User user = new User();
                 user.setUsername(usernametxt);
                 user.setPassword(passwordtxt);
-               final Call<ResponseBody> call = service.login(user);
-                call.enqueue(new Callback<ResponseBody>() {
+               final Call<User> call = service.login(user);
+                call.enqueue(new Callback<User>() {
                     @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    public void onResponse(Call<User> call, Response<User> response) {
                         if(response.isSuccessful()) {
                             session.createLoginSession(usernametxt, passwordtxt);
                             pb.setVisibility(View.INVISIBLE);
@@ -90,7 +90,7 @@ public class AccountFragment extends Fragment {
                                     Toast.LENGTH_LONG).show();
                             // open LoggedUser fragment
                             Bundle data = new Bundle();
-                            data.putString("username",usernametxt);
+                            data.putLong("id",Long.valueOf(response.body().getId()));
                             LoggedUserFragment newfragment = new LoggedUserFragment();
                             newfragment.setArguments(data);
                             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -105,7 +105,7 @@ public class AccountFragment extends Fragment {
                         }
                     }
                     @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    public void onFailure(Call<User> call, Throwable t) {
                         Toast.makeText(getContext(),
                                 "An error has ocurred.Try again.",
                                 Toast.LENGTH_LONG).show();
