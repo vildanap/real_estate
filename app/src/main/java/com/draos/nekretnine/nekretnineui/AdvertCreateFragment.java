@@ -1,6 +1,8 @@
 package com.draos.nekretnine.nekretnineui;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -146,6 +148,7 @@ public class AdvertCreateFragment extends Fragment {
                 MultipartBody.Part body = MultipartBody.Part.createFormData("files", "", attachmentEmpty);
 
                 Fragment fragment =  new UploadImagesFragment();
+
                 //Put the values
                 Bundle args = new Bundle();
                 args.putString("title", title.getText().toString());
@@ -160,12 +163,12 @@ public class AdvertCreateFragment extends Fragment {
                 args.putLong("viewsCount",0);
                 args.putLong("numberOfRooms",rooms.getValue());
 
-                fragment.setArguments(args);
+               fragment.setArguments(args);
+
 
                 //Inflate the fragment
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment,"Advert").addToBackStack("Advert").commitAllowingStateLoss();
-
+               AppCompatActivity activity = (AppCompatActivity) v.getContext();
+               activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment,"Advert").addToBackStack("Advert").commitAllowingStateLoss();
             }
         });
 

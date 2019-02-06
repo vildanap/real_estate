@@ -3,11 +3,13 @@ package com.draos.nekretnine.nekretnineui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 public class HomeFragment extends Fragment {
     private SearchFragment.OnFragmentInteractionListener listener;
@@ -29,7 +31,7 @@ public class HomeFragment extends Fragment {
         // recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         CardView sales = (CardView) view.findViewById(R.id.sales_card);
         CardView rentals = (CardView) view.findViewById(R.id.rentals_card);
-
+        ImageView help = (ImageView) view.findViewById(R.id.imageView2);
         sales.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -61,6 +63,22 @@ public class HomeFragment extends Fragment {
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).addToBackStack(null).commitAllowingStateLoss();
 
+            }
+        });
+
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+
+                //Inflate the fragment
+             //   AppCompatActivity activity = (AppCompatActivity) v.getContext();
+              //  activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).addToBackStack(null).commitAllowingStateLoss();
+                HelpFragment newfragment = new HelpFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
+                fragmentTransaction.commit();
             }
         });
         return view;
