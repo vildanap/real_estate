@@ -167,7 +167,7 @@ public class AdvertCreateFragment extends Fragment {
 
 
                 //Inflate the fragment
-               AppCompatActivity activity = (AppCompatActivity) v.getContext();
+               AppCompatActivity activity = (AppCompatActivity) getView().getContext();
                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment,"Advert").addToBackStack("Advert").commitAllowingStateLoss();
             }
         });

@@ -104,7 +104,7 @@ public class SearchFragment extends Fragment {
                 fragment.setArguments(args);
 
                 //Inflate the fragment
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                AppCompatActivity activity = (AppCompatActivity) getView().getContext();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment,"Tag_Search")
                         .addToBackStack("Tag_Search")
                         .commitAllowingStateLoss();
