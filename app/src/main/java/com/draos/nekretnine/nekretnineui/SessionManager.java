@@ -93,6 +93,10 @@ public class SessionManager {
         return user;
     }
 
+    public void putId()
+    {
+
+    }
     /**
      * Clear session details
      * */

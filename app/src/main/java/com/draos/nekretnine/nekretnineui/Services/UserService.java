@@ -5,11 +5,7 @@ import java.util.List;
 import com.draos.nekretnine.nekretnineui.Model.User;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
+import retrofit2.http.*;
 
 public interface UserService {
     @GET("users/all")
@@ -24,5 +20,6 @@ public interface UserService {
     Call<User> login(@Body User user);
     @PUT("users/{username}")
     Call<ResponseBody> updateUser(@Path("username") String username, @Body User user);
-
+    @DELETE("users/{userId}")
+    Call<ResponseBody> deleteUser(@Path("userId") long id);
 }

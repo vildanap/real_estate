@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="350dp"
+              android:layout_height="475dp"
+              android:background="@color/colorPrimary"
+              android:padding="5dp"
+              android:layout_gravity="center">
+    <TextView
+            android:id="@+id/txtclose"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="X"
+            android:textSize="30dp"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            android:gravity="center"
+       />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/delete"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Elina Grofild"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp" android:id="@+id/fullname"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Montreal,Canada"
+                android:textColor="@color/colorWhite"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp" android:id="@+id/username"/>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="150"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                    android:id="@+id/advertsnumber"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Adverts"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                   />
+        </LinearLayout>
+        <LinearLayout
+
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="19"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                    android:id="@+id/favouritesnumber"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Favourites"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                 />
+        </LinearLayout>
+        <LinearLayout
+
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="50"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                    android:id="@+id/advertviews"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Advert views"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                    />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+            android:id="@+id/btndelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DELETE ACCOUNT"
+            android:layout_marginTop="25dp"
+            android:textColor="@color/colorRed"
+            android:layout_gravity="center_horizontal"
+          />
+
+</LinearLayout>
