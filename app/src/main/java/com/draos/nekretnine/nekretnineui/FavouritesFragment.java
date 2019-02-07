@@ -40,6 +40,17 @@ public class FavouritesFragment extends Fragment {
         }
         else{
             tv.setVisibility(View.INVISIBLE);
+            Fragment fragment =  new AdvertiseFragment();
+            //Put the value
+            Bundle args = new Bundle();
+            args.putString("favourites","favourites");
+            fragment.setArguments(args);
+
+            //Inflate the fragment
+            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).addToBackStack(null).commitAllowingStateLoss();
+
+
         }
         tv.setOnClickListener(new View.OnClickListener() {
             @Override

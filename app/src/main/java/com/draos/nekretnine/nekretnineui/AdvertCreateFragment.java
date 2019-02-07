@@ -49,7 +49,6 @@ public class AdvertCreateFragment extends Fragment {
     EditText address;
     Button btnReset;
 
-
     public static AdvertCreateFragment newInstance() {
         return new AdvertCreateFragment();
     }
@@ -158,7 +157,7 @@ public class AdvertCreateFragment extends Fragment {
                 args.putDouble("price",Double.valueOf(price.getText().toString()));
                 args.putDouble("area",Double.valueOf(area.getText().toString()));
                 args.putLong("locationId",1);
-                args.putLong("userId",1);
+                args.putLong("userId",Long.valueOf(session.getUserDetails().get("email")));
                 args.putString("address",address.getText().toString());
                 args.putLong("viewsCount",0);
                 args.putLong("numberOfRooms",rooms.getValue());

@@ -68,6 +68,7 @@ public class Advertise {
         this.location = location;
     }
 
+    public Advertise(){}
     public long getId() {
         return id;
     }

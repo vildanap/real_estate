@@ -14,6 +14,8 @@ public interface AdvertService {
     Call<List<Advertise>> all();
     @GET("adverts/{advertId}")
     Call<Advertise> getAdvertise(@Path("advertId") long id);
+    @GET("adverts/favorite/{userId}")
+    Call<List<Advertise>> getFavorites(@Path("userId") long userId);
     @Multipart
     @POST("adverts/post")
     Call<ResponseBody> createAdvert(@Part List<MultipartBody.Part> images, @Part("formDataJson") RequestBody formDataJson);
