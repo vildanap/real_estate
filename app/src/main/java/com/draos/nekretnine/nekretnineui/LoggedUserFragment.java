@@ -108,7 +108,7 @@ public class LoggedUserFragment extends Fragment {
 
                 usernameField.setText(session.getUserDetails().get("name"));
                 final Long userId = Long.valueOf(session.getUserDetails().get("email"));
-                fullnameField.setText(userId.toString());
+                fullnameField.setText(session.getUserDetails().get("firstname")+" " +session.getUserDetails().get("surname"));
                 txtclose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

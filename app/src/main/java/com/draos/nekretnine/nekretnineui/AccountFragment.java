@@ -82,23 +82,12 @@ public class AccountFragment extends Fragment {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         if(response.isSuccessful()) {
-                            session.createLoginSession(usernametxt, String.valueOf(response.body().getId()));
-                   /*         session.getUserDetails().put("id",String.valueOf(response.body().getId()));
-                            session.getUserDetails().put("name",response.body().getFirstName());
-                            session.getUserDetails().put("surname",response.body().getLastName());
-                            session.getUserDetails().put("username",response.body().getUsername());*/
+                            session.createLoginSession(usernametxt, String.valueOf(response.body().getId()),response.body().getFirstName(),response.body().getLastName());
                             pb.setVisibility(View.INVISIBLE);
-                            //logoutbutton.setVisibility(View.VISIBLE);
+
                             Toast.makeText(getContext(),
                                     "Successfully logged in",
                                     Toast.LENGTH_LONG).show();
-                            // open LoggedUser fragment
-                         //   Bundle data = new Bundle();
-                          //  data.putLong("id",Long.valueOf(response.body().getId()));
-                          //  data.putString("name",response.body().getFirstName());
-                          //  data.putString("surname",response.body().getLastName());
-                          //  data.putString("username",response.body().getUsername());
-
 
                             LoggedUserFragment newfragment = new LoggedUserFragment();
                           //  newfragment.setArguments(data);

@@ -503,7 +503,7 @@ public class EditProfileFragment extends Fragment {
                     Toast.makeText(getContext(),
                             "Account successfully edited",
                             Toast.LENGTH_LONG).show();
-                    session.createLoginSession(user.getUsername(),user.getPassword());
+                    session.createLoginSession(user.getUsername(),String.valueOf(user.getId()),user.getFirstName(),user.getLastName());
                     LoggedUserFragment newfragment = new LoggedUserFragment();
                     FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(((ViewGroup) (getView().getParent())).getId(), newfragment);
