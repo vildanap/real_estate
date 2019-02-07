@@ -3,6 +3,7 @@ package com.draos.nekretnine.nekretnineui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,14 +36,24 @@ public class FavouritesFragment extends Fragment {
         TextView tv = (TextView) view.findViewById(R.id.tvFavourites);
 
         if (!session.isLoggedIn()) {
-            tv.setText("Please log in to see Favourites.");
+            tv.setText("Click here to log in in order to see your Favourites.");
         }
         else{
-            tv.setText("Favourites");
+            tv.setVisibility(View.INVISIBLE);
         }
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                AccountFragment newfragment = new AccountFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
+                fragmentTransaction.commit();
+            }
+        });
             return view;
     }
+
 
     @Override
     public void onAttach(Context context) {

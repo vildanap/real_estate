@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import static android.text.Layout.JUSTIFICATION_MODE_INTER_WORD;
+
 public class HelpFragment extends Fragment {
 
     private HelpFragment.OnFragmentInteractionListener listener;
@@ -53,8 +55,10 @@ public class HelpFragment extends Fragment {
                 "By leaving your personal information, other users will be able to contact you by phone number or e-mail. Similarly, by clicking on the ad you can contact real estate owners.\n" +
                 "\n" +
                 "How do I search real estate?\n" +
-                "Search for properties by going to a search shortcut at the bottom of the screen. Search is possible depending on category (rent / sale), price, city, settlement and number of rooms.");
-
+                "Search for properties by going to a search shortcut at the bottom of the screen. Search is possible depending on category (rent / sale), price, city, settlement and number of rooms.\n" +
+                "\n" +
+                "I've seen a real estate that I like, but I still want to keep looking. Can I remember it?\n" +
+                "You can remember it by clicking on the 'Star' icon next to an ad / property. You can check it out later by clicking the 'Favorite' icon (Star) at the bottom of the screen.");
 
         return view;
     }
