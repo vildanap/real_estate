@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,8 +62,11 @@ public class AdvertCreateFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Session class instance
         session = new SessionManager(this.getContext());
-
     }
+    // validation fields
+    boolean validation =true;
+    TextInputLayout title_layout,description_layout,price_layout,area_layout,address_layout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,6 +75,12 @@ public class AdvertCreateFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_create_advertise, container, false);
 
+        //validation fields
+        title_layout = view.findViewById(R.id.title_layout);
+        description_layout=view.findViewById(R.id.description_layout);
+        price_layout=view.findViewById(R.id.price_layout);
+        area_layout=view.findViewById(R.id.area_layout);
+        address_layout=view.findViewById(R.id.address_layout);
         //fields
         spinnerCities =  view.findViewById(R.id.spinnerCities);
         spinnerSettlement = view.findViewById(R.id.spinnerSettlement);
@@ -85,6 +98,7 @@ public class AdvertCreateFragment extends Fragment {
         String[] cities = new String[]{"Sarajevo", "Tuzla", "Mostar"};
         String[] adType = new String[]{"Sale","Rent"};
         String[] propertyType = new String[]{"Apartment","House"};
+        String [] sarajevoSettlement = new String[]{"Pofalici","Ciglane","Grbavica"};
 
         ArrayAdapter<String> adaptercity = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, cities);
         spinnerCities.setAdapter(adaptercity);
@@ -94,6 +108,9 @@ public class AdvertCreateFragment extends Fragment {
 
         ArrayAdapter<String> adapterProperty = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, propertyType);
         spinnerPropertyType.setAdapter(adapterProperty);
+
+        ArrayAdapter<String> adapterSettlement = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item,sarajevoSettlement );
+        spinnerSettlement.setAdapter(adapterSettlement);
 
         iCurrentSelection = 0;
 
@@ -131,7 +148,16 @@ public class AdvertCreateFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-
+                spinnerCities.setSelection(0);
+                title.setText("");
+                description.setText("");
+                price.setText("");
+                area.setText("");
+                spinnerSettlement.setSelection(0);
+                spinnerAdvertType.setSelection(0);
+                spinnerPropertyType.setSelection(0);
+                address.setText("");
+                rooms.setValue(1);
             }
         });
         //create advert
@@ -147,7 +173,9 @@ public class AdvertCreateFragment extends Fragment {
                 l.setId(1);
 
                 Advertise a = new Advertise(title.getText().toString(),description.getText().toString(),Double.valueOf(price.getText().toString()),Double.valueOf(area.getText().toString()),spinnerAdvertType.getSelectedItem().toString(),spinnerPropertyType.getSelectedItem().toString(),0,rooms.getValue(),address.getText().toString(),u,l);*/
-                //slike prazan fajl
+                //                //slike prazan fajl
+                boolean validationResult = validate();
+                if(validation==true && validationResult==true){
                 RequestBody attachmentEmpty = RequestBody.create(MediaType.parse("image/jpeg"), "");
                 MultipartBody.Part body = MultipartBody.Part.createFormData("files", "", attachmentEmpty);
 
@@ -174,12 +202,209 @@ public class AdvertCreateFragment extends Fragment {
                AppCompatActivity activity = (AppCompatActivity) getView().getContext();
                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment,"Advert").addToBackStack("Advert").commitAllowingStateLoss();
             }
-        });
+            else {
 
+                }
+            }
+        });
+        // VALIDATION
+        title.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateTitle(s);
+            }
+        });
+        title.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    validateTitle(((EditText) v).getText());
+                }
+            }
+        });
+        description.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateDescription(s);
+            }
+        });
+        description.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    validateDescription(((EditText) v).getText());
+                }
+            }
+        });
+        price.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validatePrice(s);
+            }
+        });
+        price.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    validatePrice(((EditText) v).getText());
+                }
+            }
+        });
+        area.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateArea(s);
+            }
+        });
+        area.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    validateArea(((EditText) v).getText());
+                }
+            }
+        });
+        address.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateAddress(s);
+            }
+        });
+        address.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    validateAddress(((EditText) v).getText());
+                }
+            }
+        });
         return view;
     }
-
-    @Override
+    private void validateTitle(Editable s) {
+        if (!TextUtils.isEmpty(s) && title.getText().toString().length()>=1 && title.getText().toString().length()<201) {
+            title_layout.setError(null);
+            validation=true;
+        }
+        else{
+            title_layout.setError("Title should contain min. 1 and max. 200 characters");
+            validation=false;
+        }
+    }
+    private void validateDescription(Editable s) {
+        if (!TextUtils.isEmpty(s) && description.getText().toString().length()>=1 && description.getText().toString().length()<201) {
+            description_layout.setError(null);
+            validation=true;
+        }
+        else{
+           description_layout.setError("Description should contain min. 1 and max. 200 characters");
+            validation=false;
+        }
+    }
+    private void validatePrice(Editable s) {
+        if (!TextUtils.isEmpty(s) && price.getText().toString().length()>=1) {
+            price_layout.setError(null);
+            validation=true;
+        }
+        else{
+            price_layout.setError("Price should not be empty");
+            validation=false;
+        }
+    }
+    private void validateArea(Editable s) {
+        if (!TextUtils.isEmpty(s) && area.getText().toString().length()>=1) {
+            area_layout.setError(null);
+            validation=true;
+        }
+        else{
+            area_layout.setError("Area should not be empty");
+            validation=false;
+        }
+    }
+    private void validateAddress(Editable s) {
+        if (!TextUtils.isEmpty(s) && address.getText().toString().length()>=4 && address.getText().toString().length()<201) {
+            address_layout.setError(null);
+            validation=true;
+        }
+        else{
+            address_layout.setError("Address should contain min. 4 and max. 200 characters");
+            validation=false;
+        }
+    }
+    private boolean validate() {
+        boolean validation = true;
+        if (title.getText().toString().equals("")) {
+            title_layout.setError("Title should not be empty");
+            validation = false;
+        }
+        if (description.getText().toString().equals("")) {
+            description_layout.setError("Description should not be empty");
+            validation = false;
+        }
+        if (price.getText().toString().length()==0) {
+            price_layout.setError("Price should not be empty");
+            validation = false;
+        }
+        if (area.getText().toString().length()==0) {
+            area_layout.setError("Area should not be empty");
+            validation = false;
+        }
+        if (address.getText().toString().equals("")) {
+            address_layout.setError("Address should not be empty");
+            validation = false;
+        }
+        return validation;
+    }
+        @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof AdvertCreateFragment.OnFragmentInteractionListener) {
