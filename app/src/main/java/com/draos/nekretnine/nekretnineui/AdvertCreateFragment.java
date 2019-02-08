@@ -108,6 +108,11 @@ public class AdvertCreateFragment extends Fragment {
                     else if(i==1){
                     SettlementSa = new String[]{"Mosnik", "Slatina", "Miladije"};
                     }
+                    else if(i==2)
+                    {
+                        SettlementSa = new String[]{"Brankovac", "Bijeli Brijeg", "Zalik"};
+
+                    }
                     ArrayAdapter<String> adapterProperty = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item,SettlementSa );
                     spinnerSettlement.setAdapter(adapterProperty);
 
@@ -156,13 +161,13 @@ public class AdvertCreateFragment extends Fragment {
                 args.putString("propertyType",spinnerPropertyType.getSelectedItem().toString());
                 args.putDouble("price",Double.valueOf(price.getText().toString()));
                 args.putDouble("area",Double.valueOf(area.getText().toString()));
-                args.putLong("locationId",1);
+                args.putString("locationId",spinnerSettlement.getSelectedItem().toString());
                 args.putLong("userId",Long.valueOf(session.getUserDetails().get("email")));
                 args.putString("address",address.getText().toString());
                 args.putLong("viewsCount",0);
                 args.putLong("numberOfRooms",rooms.getValue());
 
-               fragment.setArguments(args);
+                fragment.setArguments(args);
 
 
                 //Inflate the fragment

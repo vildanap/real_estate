@@ -39,7 +39,8 @@
         <Button
                 android:text="Create"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/buttonCreateAd" android:layout_weight="1"/>
+                android:layout_height="wrap_content" android:id="@+id/buttonCreateAd" android:layout_weight="1"
+                android:textColor="@color/colorAccent"/>
     </LinearLayout>
 
 

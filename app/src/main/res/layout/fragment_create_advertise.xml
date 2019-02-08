@@ -183,11 +183,13 @@
         <Button
                 android:text="Reset"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/buttonResetAdvert" android:layout_weight="1"/>
+                android:layout_height="wrap_content" android:id="@+id/buttonResetAdvert" android:layout_weight="1"
+                android:textColor="@color/colorRed"/>
         <Button
                 android:text="Next"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/buttonCreateAdvert" android:layout_weight="1"/>
+                android:layout_height="wrap_content" android:id="@+id/buttonCreateAdvert" android:layout_weight="1"
+                android:textColor="@color/colorAccent"/>
     </LinearLayout>
     <LinearLayout
             xmlns:numberpicker="http://schemas.android.com/apk/res-auto"

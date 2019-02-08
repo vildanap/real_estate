@@ -51,6 +51,7 @@ public class LoggedUserFragment extends Fragment {
         final Button editProfile = view.findViewById(R.id.button11);
         final Button createADbutton = view.findViewById(R.id.button9);
         final Button deleteButton = view.findViewById(R.id.button6);
+        final Button viewAdverts = view.findViewById(R.id.button10);
 
 
         logoutbutton.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +68,16 @@ public class LoggedUserFragment extends Fragment {
             }
         });
 
+        viewAdverts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                MyAdvertsFragment newfragment = new MyAdvertsFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
+                fragmentTransaction.commit();
+            }
+        });
         editProfile.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -149,6 +160,8 @@ public class LoggedUserFragment extends Fragment {
             }
 
         });
+
+
       return view;
     }
 

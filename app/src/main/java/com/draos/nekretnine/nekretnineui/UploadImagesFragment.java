@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -100,7 +101,8 @@ public class UploadImagesFragment extends Fragment {
         final Double area = getArguments().getDouble("area");
         final String address = getArguments().getString("address");
         final Long rooms = getArguments().getLong("numberOfRooms");
-
+        final String location = getArguments().getString("locationId");
+        final Long user = getArguments().getLong("userId");
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,8 +148,8 @@ public class UploadImagesFragment extends Fragment {
                     ad.put("propertyType",pType);
                     ad.put("price",price);
                     ad.put("area",area);
-                    ad.put("locationId",1);
-                    ad.put("userId",1);
+                    ad.put("location",location);
+                    ad.put("userId",user);
                     ad.put("address",address);
                     ad.put("viewsCount",0);
                     ad.put("numberOfRooms",rooms);
@@ -160,6 +162,12 @@ public class UploadImagesFragment extends Fragment {
                                 Toast.makeText(getContext(),
                                         "Advert successfully created.",
                                         Toast.LENGTH_LONG).show();
+
+                                MyAdvertsFragment newfragment = new MyAdvertsFragment();
+                                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
+                                fragmentTransaction.commit();
+
                             } else {
                                 System.out.println(response.errorBody());
                             }
@@ -168,7 +176,7 @@ public class UploadImagesFragment extends Fragment {
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
                             Toast.makeText(getContext(),
-                                    t.getMessage(),
+                                    "An error has occured. Please try again.",
                                     Toast.LENGTH_LONG).show();
                         }
                     });
