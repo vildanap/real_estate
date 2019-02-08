@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,30 +36,30 @@ public class HelpFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_help, container, false);
 
         TextView tv = (TextView) view.findViewById(R.id.help);
-        tv.append("If you are a new user, here you can find all the necessary information about the application.\n" +
+        tv.append(Html.fromHtml("<b>If you are a new user, here you can find all the necessary information about the application.</b> <br>" +
                 "The purpose of the Real Estate application is to facilitate the search for real estate users through sophisticated searches.\n" +
                 "If you own a real estate you can post an ad on our site!\n" +
-                "\n" +
-                "Is it necessary to create an account?\n" +
+                "<br>" +
+                "<b>Is it necessary to create an account?</b> <br>" +
                 "It is not necessary to create a user account to view and search the ads. If you want to place an ad, creating an account is mandatory.\n" +
-                "\n" +
-                "How do I create an account?\n" +
+                "<br>" +
+                "<b>How do I create an account?</b> <br>" +
                 "You can create a user account by going to the user shortcut at the bottom of the screen.\n" +
-                "\n" +
-                "How do I set up an ad?\n" +
+                "<br>" +
+                "<b>How do I set up an ad?</b> <br>" +
                 "To create an ad, you need to create an account. After creating your account, sign in with your data, after which you will be able to create your ad by clicking the 'Create advert' button.\n" +
-                "\n" +
-                "What options do I have as a registered user?\n" +
+                "<br>" +
+                "<b>What options do I have as a registered user?</b> <br>" +
                 "As a registered user, you have the ability to post ads and view your ads, and edit your account.\n" +
-                "\n" +
-                "How can I contact others?\n" +
+                "<br>" +
+                "<b>How can I contact others?</b> <br>" +
                 "By leaving your personal information, other users will be able to contact you by phone number or e-mail. Similarly, by clicking on the ad you can contact real estate owners.\n" +
-                "\n" +
-                "How do I search real estate?\n" +
+                "<br>" +
+                "<b>How do I search real estate?</b> <br>" +
                 "Search for properties by going to a search shortcut at the bottom of the screen. Search is possible depending on category (rent / sale), price, city, settlement and number of rooms.\n" +
-                "\n" +
-                "I've seen a real estate that I like, but I still want to keep looking. Can I remember it?\n" +
-                "You can remember it by clicking on the 'Star' icon next to an ad / property. You can check it out later by clicking the 'Favorite' icon (Star) at the bottom of the screen.");
+                "<br>" +
+                "<b>I've seen a real estate that I like, but I still want to keep looking. Can I remember it?</b> <br>" +
+                "You can remember it by clicking on the 'Star' icon next to an ad / property. You can check it out later by clicking the 'Favorite' icon (Star) at the bottom of the screen."));
 
         return view;
     }

@@ -57,7 +57,10 @@ public class AdvertiseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         String cardClicked = getArguments().getString("ClickedCard");
         String favourites = getArguments().getString("favourites");
+        String myAdverts = getArguments().getString("myAdverts");
+
         session = new SessionManager(this.getContext());
+        final Long userId = Long.valueOf(session.getUserDetails().get("email"));
 
         if(cardClicked!=null) {
             if (cardClicked.equals("sales")) {
@@ -73,11 +76,12 @@ public class AdvertiseFragment extends Fragment {
             }
         }
         if(favourites!=null){
-            final Long userId = Long.valueOf(session.getUserDetails().get("email"));
-            Log.d("ID",session.getUserDetails().toString());
+            //Log.d("ID",session.getUserDetails().toString());
             getFavourites(userId);
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Favourites");
-
+        }
+        if(myAdverts != null){
+            getPostedBy(userId);
         }
         if(advertiseList != null) {
             advertiseAdapter = new AdvertiseAdapter(advertiseList, getContext());
@@ -174,7 +178,7 @@ public class AdvertiseFragment extends Fragment {
         advertiseList.add(d);*/
         AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
         try {
-            final Call<List<Advertise>> call = service.all();
+            final Call<List<Advertise>> call = service.getSale();
             call.enqueue(new Callback<List<Advertise>>() {
                 @Override
                 public void onResponse(Call<List<Advertise>> call, Response<List<Advertise>> response) {
@@ -217,11 +221,55 @@ public class AdvertiseFragment extends Fragment {
 
     }
 
-    //TODO retrofit getRentals
     public void getRentalsList() {
         AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
         try {
-            final Call<List<Advertise>> call = service.all();
+            final Call<List<Advertise>> call = service.getRent();
+            call.enqueue(new Callback<List<Advertise>>() {
+                @Override
+                public void onResponse(Call<List<Advertise>> call, Response<List<Advertise>> response) {
+                    if (response.isSuccessful()) {
+
+                        if(response.body()!=null) {
+                            for (int i = 0; i < response.body().size(); i++) {
+
+                                Advertise a = new Advertise();
+                                a = response.body().get(i);
+                                advertiseList.add(a);
+                            }
+                            advertiseAdapter.notifyDataSetChanged();
+                        }
+
+                    } else {
+                        System.out.println(response.message());
+                        Toast.makeText(getContext(),
+                                "Username or password not correct",
+                                LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Advertise>> call, Throwable t) {
+                    Toast.makeText(getContext(),
+                            "An error has ocurred.Try again.",
+                            LENGTH_LONG).show();
+                    Log.d("GRESKA", "onFailure: "+ t.getMessage());
+                }
+
+            });
+
+
+        }
+        catch(Exception e){
+            Toast.makeText(getContext(),e.getMessage(),LENGTH_LONG).show();
+        }
+
+    }
+
+    public void getPostedBy(long userId) {
+        AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
+        try {
+            final Call<List<Advertise>> call = service.getAdvertsPostedBy(userId);
             call.enqueue(new Callback<List<Advertise>>() {
                 @Override
                 public void onResponse(Call<List<Advertise>> call, Response<List<Advertise>> response) {

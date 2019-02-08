@@ -31,6 +31,16 @@ public class MyAdvertsFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("My Adverts");
         View view = inflater.inflate(R.layout.fragment_myadverts, container, false);
 
+        Fragment fragment =  new AdvertiseFragment();
+        //Put the value
+        Bundle args = new Bundle();
+        args.putString("myAdverts","myAdverts");
+        fragment.setArguments(args);
+
+        //Inflate the fragment
+        AppCompatActivity activity = (AppCompatActivity) view.getContext();
+        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).addToBackStack(null).commitAllowingStateLoss();
+
 
         return view;
     }
