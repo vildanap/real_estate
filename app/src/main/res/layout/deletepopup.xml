@@ -24,9 +24,9 @@
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/delete"
+                android:src="@drawable/sale"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"/>
+                android:layout_marginTop="15dp" android:id="@+id/advertType"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,20 +35,20 @@
                 android:textStyle="bold"
 
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp" android:id="@+id/fullname"/>
+                android:layout_marginTop="5dp" android:id="@+id/title"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Montreal,Canada"
                 android:textColor="@color/colorWhite"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp" android:id="@+id/username"/>
+                android:layout_marginTop="5dp" android:id="@+id/location"/>
     </LinearLayout>
     <LinearLayout
             android:layout_marginTop="15dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="100dp">
         <LinearLayout
 
                 android:gravity="center"
@@ -60,17 +60,17 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="150"
+                    android:text="150000"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
-                    android:id="@+id/advertsnumber"/>
+                    android:id="@+id/pricenumber"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Adverts"
+                    android:text="Price"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
-                   />
+            />
         </LinearLayout>
         <LinearLayout
 
@@ -83,17 +83,17 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="19"
+                    android:text="80"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
-                    android:id="@+id/favouritesnumber"/>
+                    android:id="@+id/areanumber"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Favourites"
+                    android:text="Area"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
-                 />
+            />
         </LinearLayout>
         <LinearLayout
 
@@ -106,32 +106,32 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="50"
+                    android:text="2"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
-                    android:id="@+id/advertviews"/>
+                    android:id="@+id/roomsnumber"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Advert views"
+                    android:text="Rooms"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
-                    />
+            />
         </LinearLayout>
     </LinearLayout>
 
     <TextView
             android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/textView18" android:textColor="@color/colorWhite"
-            android:textStyle="bold"
-            tools:text="If you click on 'DELETE ACCOUNT' you will permanently delete your account. Are you sure?"
-            android:textSize="12sp"/>
+            android:layout_width="339dp"
+            android:layout_height="wrap_content" android:id="@+id/textView17"
+            android:textColor="@color/colorWhite"
+            tools:text="If you click on 'DELETE ADVERT' you will delete your advert permanently. Are you sure?"
+            android:textStyle="bold" android:textAllCaps="false" android:textSize="12sp"/>
     <Button
             android:id="@+id/btndelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DELETE ACCOUNT"
+            android:text="DELETE ADVERT"
             android:layout_marginTop="25dp"
             android:textColor="@color/colorRed"
             android:layout_gravity="center_horizontal"

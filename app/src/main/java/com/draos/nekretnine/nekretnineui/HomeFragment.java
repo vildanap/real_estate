@@ -78,6 +78,7 @@ public class HomeFragment extends Fragment {
                 HelpFragment newfragment = new HelpFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });

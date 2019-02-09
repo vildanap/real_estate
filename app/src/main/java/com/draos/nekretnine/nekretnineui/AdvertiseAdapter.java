@@ -34,6 +34,7 @@ public class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.MyVi
         holder.adPrice.setText(String.valueOf(movie.getPrice()));
         holder.adArea.setText(String.valueOf(movie.getArea()) + " squares");
         holder.imageView.setImageResource(R.drawable.sale);
+        holder.adDescription.setText(movie.getDescription());
         }
     @Override
     public int getItemCount() {
@@ -66,7 +67,11 @@ public class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.MyVi
                     Bundle bundle = new Bundle();
                     bundle.putString("title", String.valueOf(a.getTitle()));
                     bundle.putString("price", String.valueOf(a.getPrice()));
-
+                    bundle.putString("description",a.getDescription());
+                    bundle.putString("area",String.valueOf(a.getArea()));
+                    bundle.putString("rooms",String.valueOf(a.getNumberOfRooms()));
+                    bundle.putLong("id",a.getId());
+                    bundle.putString("advertType",a.getAdvertType());
                     AdvertiseDetailsFragment advertiseDetails = new AdvertiseDetailsFragment();
                     advertiseDetails.setArguments(bundle);
 

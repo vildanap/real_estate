@@ -46,7 +46,7 @@ public class AdvertiseFragment extends Fragment {
     Drawable imgArrowUp;
 
     SessionManager session;
-
+    Long userId;
 
     private OnFragmentInteractionListener listener;
     public static AdvertiseFragment newInstance() {
@@ -60,7 +60,8 @@ public class AdvertiseFragment extends Fragment {
         String myAdverts = getArguments().getString("myAdverts");
 
         session = new SessionManager(this.getContext());
-        final Long userId = Long.valueOf(session.getUserDetails().get("email"));
+        if(session.isLoggedIn())
+         userId = Long.valueOf(session.getUserDetails().get("email"));
 
         if(cardClicked!=null) {
             if (cardClicked.equals("sales")) {

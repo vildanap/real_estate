@@ -351,22 +351,22 @@ public class AdvertCreateFragment extends Fragment {
         }
     }
     private void validatePrice(Editable s) {
-        if (!TextUtils.isEmpty(s) && price.getText().toString().length()>=1) {
+        if (!TextUtils.isEmpty(s) && price.getText().toString().length()>=1 && TextUtils.isDigitsOnly(price.getText().toString())) {
             price_layout.setError(null);
             validation=true;
         }
         else{
-            price_layout.setError("Price should not be empty");
+            price_layout.setError("Price should not be empty and should contain only digits");
             validation=false;
         }
     }
     private void validateArea(Editable s) {
-        if (!TextUtils.isEmpty(s) && area.getText().toString().length()>=1) {
+        if (!TextUtils.isEmpty(s) && area.getText().toString().length()>=1 && TextUtils.isDigitsOnly(area.getText().toString())) {
             area_layout.setError(null);
             validation=true;
         }
         else{
-            area_layout.setError("Area should not be empty");
+            area_layout.setError("Area should not be empty and should contain only digits");
             validation=false;
         }
     }

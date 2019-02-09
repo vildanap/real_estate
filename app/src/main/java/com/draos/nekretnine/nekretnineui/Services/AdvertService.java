@@ -29,4 +29,6 @@ public interface AdvertService {
     @POST("/uploadFile")
     Call<ResponseBody> postImage(@Part List<MultipartBody.Part> images);
 
+    @DELETE("/adverts/{advertId}")
+    Call<ResponseBody> deleteAdvert(@Path("advertId") long id);
 }

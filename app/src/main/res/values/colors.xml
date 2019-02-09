@@ -6,6 +6,6 @@
     <color name="colorSwitch">#194b19</color>
     <color name="colorInfo">#4169e1</color>
     <color name="colorRed">#ff0000</color>
-    <color name= "colorWhite">#FFFF</color>
+    <color name= "colorWhite">#ffffff</color>
 
 </resources>

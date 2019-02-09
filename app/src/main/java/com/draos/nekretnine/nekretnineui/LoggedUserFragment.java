@@ -75,6 +75,7 @@ public class LoggedUserFragment extends Fragment {
                 MyAdvertsFragment newfragment = new MyAdvertsFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
@@ -85,6 +86,7 @@ public class LoggedUserFragment extends Fragment {
                 EditProfileFragment newfragment = new EditProfileFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
@@ -96,6 +98,7 @@ public class LoggedUserFragment extends Fragment {
                 AdvertCreateFragment newfragment = new AdvertCreateFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
@@ -105,7 +108,7 @@ public class LoggedUserFragment extends Fragment {
             public void onClick(View v) {
                 final Dialog myDialog = new Dialog(getContext());
 
-                TextView txtclose,usernameField,fullnameField;
+                TextView txtclose,usernameField,fullnameField,txtWarning;
                 Button btnDelete;
                 myDialog.setContentView(R.layout.custompopup);
                 txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
@@ -113,10 +116,10 @@ public class LoggedUserFragment extends Fragment {
                 btnDelete = (Button) myDialog.findViewById(R.id.btndelete);
                 usernameField = (TextView) myDialog.findViewById(R.id.username);
                 fullnameField = (TextView) myDialog.findViewById(R.id.fullname);
-
+                txtWarning=(TextView)myDialog.findViewById(R.id.textView18);
                 String usernameText;
                 String fullnameText;
-
+                txtWarning.setText("If you click on the 'DELETE ACCOUNT' button, your account will be permanently deleted.");
                 usernameField.setText(session.getUserDetails().get("name"));
                 final Long userId = Long.valueOf(session.getUserDetails().get("email"));
                 fullnameField.setText(session.getUserDetails().get("firstname")+" " +session.getUserDetails().get("surname"));
