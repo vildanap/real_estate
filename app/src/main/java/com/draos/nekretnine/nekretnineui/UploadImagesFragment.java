@@ -61,6 +61,7 @@ public class UploadImagesFragment extends Fragment {
     Button btnCreate;
     ArrayList<Uri> mArrayUri;
     List<String> images;
+    Long id;
 
 
     private static final int PICK_IMAGE_MULTIPLE = 1;
@@ -84,15 +85,12 @@ public class UploadImagesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Create Advert");
-
         View view = inflater.inflate(R.layout.fragment_upload_photos, container, false);
-
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Create Advert");
         gvGallery = (GridView)view.findViewById(R.id.gv);
         btnCreate = view.findViewById(R.id.buttonCreateAd);
+        btnBack = view.findViewById(R.id.buttonBack);
 
-        //BACK
-       btnBack = view.findViewById(R.id.buttonBack);
         final String title = getArguments().getString("title");
         final String description = getArguments().getString("description");
         final String pType = getArguments().getString("propertyType");
@@ -103,6 +101,13 @@ public class UploadImagesFragment extends Fragment {
         final Long rooms = getArguments().getLong("numberOfRooms");
         final String location = getArguments().getString("locationId");
         final Long user = getArguments().getLong("userId");
+        final String type = getArguments().getString("type");
+        id = getArguments().getLong("id");
+      if(type!=null) {
+            btnCreate.setText("UPDATE");
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Update Advert");
+        }
+
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +159,7 @@ public class UploadImagesFragment extends Fragment {
                     ad.put("viewsCount",0);
                     ad.put("numberOfRooms",rooms);
 
+                    if(type==null){
                     final Call<ResponseBody> call = service.createAdvert(parts,RequestBody.create(MediaType.parse("multipart/form-data"), ad.toString()));
                     call.enqueue(new Callback<ResponseBody>() {
                         @Override
@@ -180,6 +186,38 @@ public class UploadImagesFragment extends Fragment {
                                     Toast.LENGTH_LONG).show();
                         }
                     });
+
+                }
+                else {
+                        final Call<ResponseBody> call = service.updateAdvert(id,parts,RequestBody.create(MediaType.parse("multipart/form-data"), ad.toString()));
+                        call.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.code() == 200) {
+                                    Toast.makeText(getContext(),
+                                            "Advert successfully updated.",
+                                            Toast.LENGTH_LONG).show();
+
+                                    MyAdvertsFragment newfragment = new MyAdvertsFragment();
+                                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                    fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
+                                    fragmentTransaction.commit();
+
+                                } else {
+                                    System.out.println(response.errorBody());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                Toast.makeText(getContext(),
+                                        "An error has occured. Please try again.",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                    }
+
 
                 }
                 catch (JSONException e) {

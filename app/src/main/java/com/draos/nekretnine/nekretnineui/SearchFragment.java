@@ -73,7 +73,7 @@ public class SearchFragment extends Fragment {
             public void onClick(View v)
             {
                 rangeBarPrice.setRangePinsByValue(100,200000);
-                numberPickerRooms.setValue(0);
+                numberPickerRooms.setValue(1);
                 rentals.setChecked(true);
                 sales.setChecked(true);
                 cities.setSelection(0);

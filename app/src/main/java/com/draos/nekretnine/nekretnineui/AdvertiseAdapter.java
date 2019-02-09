@@ -17,9 +17,11 @@ import java.util.List;
 public class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.MyViewHolder> {
     List<Advertise> advertiseList;
     Context context;
+
     public AdvertiseAdapter(List<Advertise> advertiseList, Context context) {
         this.advertiseList = advertiseList;
         this.context = context;
+
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -72,6 +74,7 @@ public class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.MyVi
                     bundle.putString("rooms",String.valueOf(a.getNumberOfRooms()));
                     bundle.putLong("id",a.getId());
                     bundle.putString("advertType",a.getAdvertType());
+                    bundle.putLong("userId",a.getUser().getId());
                     AdvertiseDetailsFragment advertiseDetails = new AdvertiseDetailsFragment();
                     advertiseDetails.setArguments(bundle);
 

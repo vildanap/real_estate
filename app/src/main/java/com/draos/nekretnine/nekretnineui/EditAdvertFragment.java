@@ -1,24 +1,18 @@
 package com.draos.nekretnine.nekretnineui;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.draos.nekretnine.nekretnineui.Model.Advertise;
-import com.draos.nekretnine.nekretnineui.Model.City;
-import com.draos.nekretnine.nekretnineui.Model.Location;
 import com.draos.nekretnine.nekretnineui.Model.User;
 import com.draos.nekretnine.nekretnineui.Services.AdvertService;
 import com.draos.nekretnine.nekretnineui.Services.RealEstateServiceGenerator;
@@ -27,17 +21,12 @@ import com.travijuu.numberpicker.library.NumberPicker;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import org.json.JSONException;
-import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.io.File;
-
-public class AdvertCreateFragment extends Fragment {
-    private AdvertCreateFragment.OnFragmentInteractionListener listener;
+public class EditAdvertFragment extends Fragment {
+    private EditAdvertFragment.OnFragmentInteractionListener listener;
     SessionManager session;
     Spinner spinnerCities;
     Spinner spinnerSettlement;
@@ -53,8 +42,8 @@ public class AdvertCreateFragment extends Fragment {
     EditText address;
     Button btnReset;
 
-    public static AdvertCreateFragment newInstance() {
-        return new AdvertCreateFragment();
+    public static EditAdvertFragment newInstance() {
+        return new EditAdvertFragment();
     }
 
     @Override
@@ -65,15 +54,21 @@ public class AdvertCreateFragment extends Fragment {
     }
     // validation fields
     boolean validation =true;
+
+    // advert id
+    Long id;
     TextInputLayout title_layout,description_layout,price_layout,area_layout,address_layout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Create Advert");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit Advert");
 
-        View view = inflater.inflate(R.layout.fragment_create_advertise, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_advertise, container, false);
+        Bundle extras = this.getArguments();
+        if(extras!=null)
+        id = extras.getLong("id");
 
         //validation fields
         title_layout = view.findViewById(R.id.title_layout);
@@ -94,6 +89,35 @@ public class AdvertCreateFragment extends Fragment {
         rooms = view.findViewById(R.id.number_picker2);
         address = view.findViewById(R.id.editTextadAddress);
 
+        AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
+        final Call<Advertise> call = service.getAdvertise(id);
+        call.enqueue(new Callback<Advertise>() {
+            @Override
+            public void onResponse(Call<Advertise> call, Response<Advertise> response) {
+                if(response.isSuccessful()) {
+                  title.setText((response.body().getTitle()));
+                  description.setText(response.body().getDescription());
+                  price.setText(String.valueOf(Math.round(response.body().getPrice())));
+                  area.setText(String.valueOf(response.body().getArea()));
+                  rooms.setValue(Integer.valueOf(String.valueOf(response.body().getNumberOfRooms())));
+                  address.setText(response.body().getAddress());
+                //TODO: spinnerAdvert and spinnerCity
+                } else {
+                    System.out.println(response.message());
+                    Toast.makeText(getContext(),
+                            "Error",
+                            Toast.LENGTH_LONG).show();
+                 //   pb.setVisibility(View.INVISIBLE);
+                }
+            }
+            @Override
+            public void onFailure(Call<Advertise> call, Throwable t) {
+                Toast.makeText(getContext(),
+                        "An error has ocurred.Try again.",
+                        Toast.LENGTH_LONG).show();
+              //  pb.setVisibility(View.INVISIBLE);
+            }
+        });
         //TODO Retrofit populate spinneres
         String[] cities = new String[]{"Sarajevo", "Tuzla", "Mostar"};
         String[] adType = new String[]{"Sale","Rent"};
@@ -112,7 +136,7 @@ public class AdvertCreateFragment extends Fragment {
         ArrayAdapter<String> adapterSettlement = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item,sarajevoSettlement );
         spinnerSettlement.setAdapter(adapterSettlement);
 
-        iCurrentSelection = 0;
+       // iCurrentSelection = 0;
 
         spinnerCities.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -120,10 +144,10 @@ public class AdvertCreateFragment extends Fragment {
                     // Your code here
                     String[] SettlementSa= null;
                     if(i==0){
-                   SettlementSa= new String[]{"Pofalici", "Ciglane", "Grbavica"};
+                        SettlementSa= new String[]{"Pofalici", "Ciglane", "Grbavica"};
                     }
                     else if(i==1){
-                    SettlementSa = new String[]{"Mosnik", "Slatina", "Miladije"};
+                        SettlementSa = new String[]{"Mosnik", "Slatina", "Miladije"};
                     }
                     else if(i==2)
                     {
@@ -176,33 +200,34 @@ public class AdvertCreateFragment extends Fragment {
                 //                //slike prazan fajl
                 boolean validationResult = validate();
                 if(validation==true && validationResult==true){
-                RequestBody attachmentEmpty = RequestBody.create(MediaType.parse("image/jpeg"), "");
-                MultipartBody.Part body = MultipartBody.Part.createFormData("files", "", attachmentEmpty);
+                    RequestBody attachmentEmpty = RequestBody.create(MediaType.parse("image/jpeg"), "");
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("files", "", attachmentEmpty);
 
-                Fragment fragment =  new UploadImagesFragment();
+                    Fragment fragment =  new UploadImagesFragment();
 
-                //Put the values
-                Bundle args = new Bundle();
-                args.putString("title", title.getText().toString());
-                args.putString("description", description.getText().toString());
-                args.putString("advertType",spinnerAdvertType.getSelectedItem().toString());
-                args.putString("propertyType",spinnerPropertyType.getSelectedItem().toString());
-                args.putDouble("price",Double.valueOf(price.getText().toString()));
-                args.putDouble("area",Double.valueOf(area.getText().toString()));
-                args.putString("locationId",spinnerSettlement.getSelectedItem().toString());
-                args.putLong("userId",Long.valueOf(session.getUserDetails().get("email")));
-                args.putString("address",address.getText().toString());
-                args.putLong("viewsCount",0);
-                args.putLong("numberOfRooms",rooms.getValue());
+                    //Put the values
+                    Bundle args = new Bundle();
+                    args.putString("title", title.getText().toString());
+                    args.putString("description", description.getText().toString());
+                    args.putString("advertType",spinnerAdvertType.getSelectedItem().toString());
+                    args.putString("propertyType",spinnerPropertyType.getSelectedItem().toString());
+                    args.putDouble("price",Double.valueOf(price.getText().toString()));
+                    args.putDouble("area",Double.valueOf(area.getText().toString()));
+                    args.putString("locationId",spinnerSettlement.getSelectedItem().toString());
+                    args.putLong("userId",Long.valueOf(session.getUserDetails().get("email")));
+                    args.putString("address",address.getText().toString());
+                    args.putLong("viewsCount",0);
+                    args.putLong("numberOfRooms",rooms.getValue());
+                    args.putString("type","edit");
+                    args.putLong("id",id);
+                    fragment.setArguments(args);
 
-                fragment.setArguments(args);
 
-
-                //Inflate the fragment
-               AppCompatActivity activity = (AppCompatActivity) getView().getContext();
-               activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment,"Advert").addToBackStack("Advert").commitAllowingStateLoss();
-            }
-            else {
+                    //Inflate the fragment
+                    AppCompatActivity activity = (AppCompatActivity) getView().getContext();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment,"Advert").addToBackStack("Advert").commitAllowingStateLoss();
+                }
+                else {
 
                 }
             }
@@ -346,7 +371,7 @@ public class AdvertCreateFragment extends Fragment {
             validation=true;
         }
         else{
-           description_layout.setError("Description should contain min. 1 and max. 200 characters");
+            description_layout.setError("Description should contain min. 1 and max. 200 characters");
             validation=false;
         }
     }
@@ -404,11 +429,11 @@ public class AdvertCreateFragment extends Fragment {
         }
         return validation;
     }
-        @Override
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof AdvertCreateFragment.OnFragmentInteractionListener) {
-            listener = (AdvertCreateFragment.OnFragmentInteractionListener) context;
+        if (context instanceof EditAdvertFragment.OnFragmentInteractionListener) {
+            listener = (EditAdvertFragment.OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");

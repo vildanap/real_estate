@@ -40,7 +40,7 @@ public class AdvertiseDetailsFragment extends Fragment {
     Button editAdvert,deleteAdvert;
     ImageView adTypePhoto;
     String title,price,description,area,rooms,advertType;
-    Long id;
+    Long id,userId;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,18 +57,20 @@ public class AdvertiseDetailsFragment extends Fragment {
             rooms=bundle.getString("rooms");
             advertType=bundle.getString("advertType");
             id=bundle.getLong("id");
+           userId=bundle.getLong("userId");
 
             adTitle.setText(title);
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
 
         }
 
-        if(session.isLoggedIn()){
+        if(session.isLoggedIn() && Long.valueOf(userId).toString().equals(session.getUserDetails().get("email"))) {
             editAdvert=view.findViewById(R.id.editAdvert);
             deleteAdvert=view.findViewById(R.id.deleteAdvert);
             editAdvert.setVisibility(View.VISIBLE);
             deleteAdvert.setVisibility(View.VISIBLE);
-        }
+            Bundle b = new Bundle();
+            b.putLong("id",id);
 
         deleteAdvert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,8 +153,17 @@ public class AdvertiseDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                Bundle bundle = new Bundle();
+                bundle.putLong("id",id);
+                EditAdvertFragment newfragment = new EditAdvertFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                newfragment.setArguments(bundle);
+
             }
-        });
+        });}
                return view;
     }
 

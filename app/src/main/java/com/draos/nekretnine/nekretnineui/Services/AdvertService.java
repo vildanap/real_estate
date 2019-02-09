@@ -1,6 +1,7 @@
 package com.draos.nekretnine.nekretnineui.Services;
 
 import com.draos.nekretnine.nekretnineui.Model.Advertise;
+import com.draos.nekretnine.nekretnineui.Model.User;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -29,6 +30,12 @@ public interface AdvertService {
     @POST("/uploadFile")
     Call<ResponseBody> postImage(@Part List<MultipartBody.Part> images);
 
+    @Multipart
+    @PUT("adverts/{advertId}")
+    Call<ResponseBody> updateAdvert(@Path("advertId") long id,@Part List<MultipartBody.Part> images, @Part("formDataJson") RequestBody formDataJson);
+
     @DELETE("/adverts/{advertId}")
     Call<ResponseBody> deleteAdvert(@Path("advertId") long id);
+
+
 }

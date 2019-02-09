@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -47,7 +48,7 @@ public class AdvertiseFragment extends Fragment {
 
     SessionManager session;
     Long userId;
-
+    String cardClicked;
     private OnFragmentInteractionListener listener;
     public static AdvertiseFragment newInstance() {
         return new AdvertiseFragment();
@@ -55,7 +56,7 @@ public class AdvertiseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String cardClicked = getArguments().getString("ClickedCard");
+       cardClicked = getArguments().getString("ClickedCard");
         String favourites = getArguments().getString("favourites");
         String myAdverts = getArguments().getString("myAdverts");
 
@@ -104,7 +105,6 @@ public class AdvertiseFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
         recyclerView.setAdapter(advertiseAdapter);
-
         btnPrice = view.findViewById(R.id.button_sortPrice);
         btnArea = view.findViewById(R.id.button_sortArea);
 
@@ -146,8 +146,13 @@ public class AdvertiseFragment extends Fragment {
             }
         });
 
+
+
+
         return view;
     }
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

@@ -84,7 +84,8 @@ public class AccountFragment extends Fragment {
                         if(response.isSuccessful()) {
                             session.createLoginSession(usernametxt, String.valueOf(response.body().getId()),response.body().getFirstName(),response.body().getLastName());
                             pb.setVisibility(View.INVISIBLE);
-
+                            Bundle b = new Bundle();
+                            //TODO: add arguments ->user favourites, user adverts (number)
                             Toast.makeText(getContext(),
                                     "Successfully logged in",
                                     Toast.LENGTH_LONG).show();

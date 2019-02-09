@@ -14,7 +14,6 @@
                 android:text="Rentals"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:id="@+id/textView6" android:layout_weight="1"/>
         <Switch
                 android:layout_width="wrap_content"
@@ -35,7 +34,6 @@
                 android:text="Sales"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:id="@+id/textView5" android:layout_weight="1"/>
         <Switch
                 android:layout_width="wrap_content"
@@ -55,7 +53,6 @@
                 android:text="Price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:layout_marginTop="43dp"
                 android:id="@+id/textView3" android:layout_weight="1"/>
         <com.appyvet.materialrangebar.RangeBar
@@ -97,7 +94,6 @@
                 android:text="City"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:id="@+id/textView2" android:layout_weight="1"/>
         <Spinner
                 android:id="@+id/spinnercities"
@@ -120,7 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/textView7" android:layout_weight="1"
                 android:text="Settlement"
-                android:textStyle="bold"/>
+        />
         <Spinner
                 android:id="@+id/spinnercities2"
                 android:layout_width="200dp"
@@ -142,14 +138,13 @@
             android:layout_marginLeft="8dp" android:layout_marginStart="8dp">
         <TextView
                 android:text="Rooms"
-                android:textStyle="bold"
                 android:layout_height="wrap_content" android:id="@+id/textView8"
                 android:layout_marginTop="10dp" android:layout_weight="1" android:layout_width="wrap_content"/>
         <com.travijuu.numberpicker.library.NumberPicker
                 android:id="@+id/number_picker"
                 android:layout_width="130dp"
                 android:layout_height="40dp"
-                numberpicker:min="0"
+                numberpicker:min="1"
                 numberpicker:max="10"
                 numberpicker:value="-5"
                 numberpicker:unit="1"
@@ -161,21 +156,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+            app:layout_constraintHorizontal_bias="0.08" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
+            android:gravity="center_vertical">
         <Button
                 android:text="Reset"
-                android:layout_width="wrap_content"
+                android:layout_width="164dp"
                 android:textColor="@color/colorRed"
-                android:layout_height="wrap_content" android:id="@+id/buttonReset"
+                android:layout_height="50dp" android:id="@+id/buttonReset"
                 android:layout_weight="1"
                 style="@style/Widget.AppCompat.Button.Small"
                 android:layout_marginLeft="80dp"
                 tools:layout_editor_absoluteY="398dp"/>
         <Button
                 android:text="Search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/buttonSearch"
+                android:layout_width="164dp"
+                android:layout_height="50dp" android:id="@+id/buttonSearch"
                 android:textColor="@color/colorPrimaryDark"
                 style="@style/Widget.AppCompat.Button.Small" app:layout_constraintEnd_toEndOf="parent"
                 tools:layout_editor_absoluteY="398dp"
