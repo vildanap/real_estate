@@ -14,6 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import com.draos.nekretnine.nekretnineui.Model.UserAdvertInformation;
+import com.draos.nekretnine.nekretnineui.Services.AdvertService;
 import com.draos.nekretnine.nekretnineui.Services.RealEstateServiceGenerator;
 import com.draos.nekretnine.nekretnineui.Services.UserService;
 import okhttp3.ResponseBody;
@@ -109,6 +115,7 @@ public class LoggedUserFragment extends Fragment {
                 final Dialog myDialog = new Dialog(getContext());
 
                 TextView txtclose,usernameField,fullnameField,txtWarning;
+                final TextView txtAdverts,txtAdvertViews,txtFavourites;
                 Button btnDelete;
                 myDialog.setContentView(R.layout.custompopup);
                 txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
@@ -117,11 +124,40 @@ public class LoggedUserFragment extends Fragment {
                 usernameField = (TextView) myDialog.findViewById(R.id.username);
                 fullnameField = (TextView) myDialog.findViewById(R.id.fullname);
                 txtWarning=(TextView)myDialog.findViewById(R.id.textView18);
+                txtAdverts=(TextView)myDialog.findViewById(R.id.advertsnumber);
+                txtAdvertViews=(TextView)myDialog.findViewById(R.id.advertviews);
+                txtFavourites=(TextView)myDialog.findViewById(R.id.favouritesnumber);
                 String usernameText;
                 String fullnameText;
+
+                final Long userId = Long.valueOf(session.getUserDetails().get("email"));
+
+                AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
+                final Call<UserAdvertInformation> call = service.getUserInformation(userId);
+                call.enqueue(new Callback<UserAdvertInformation>() {
+                    @Override
+                    public void onResponse(Call<UserAdvertInformation> call, Response<UserAdvertInformation> response) {
+                        if(response.isSuccessful()) {
+                            txtAdverts.setText(String.valueOf(response.body().getNumberOfAdverts()));
+                            txtAdvertViews.setText(String.valueOf(response.body().getNumberOfAdvertViews()));
+                            txtFavourites.setText(String.valueOf(response.body().getNumberOfFavorites()));
+                        } else {
+                            System.out.println(response.message());
+                            Toast.makeText(getContext(),
+                                    "Error",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<UserAdvertInformation> call, Throwable t) {
+                        Toast.makeText(getContext(),
+                                "An error has ocurred.Try again.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+
                 txtWarning.setText("If you click on the 'DELETE ACCOUNT' button, your account will be permanently deleted.");
                 usernameField.setText(session.getUserDetails().get("name"));
-                final Long userId = Long.valueOf(session.getUserDetails().get("email"));
                 fullnameField.setText(session.getUserDetails().get("firstname")+" " +session.getUserDetails().get("surname"));
                 txtclose.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -2,6 +2,8 @@ package com.draos.nekretnine.nekretnineui.Services;
 
 import com.draos.nekretnine.nekretnineui.Model.Advertise;
 import com.draos.nekretnine.nekretnineui.Model.User;
+import com.draos.nekretnine.nekretnineui.Model.UserAdvertInformation;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -23,6 +25,8 @@ public interface AdvertService {
     Call<List<Advertise>> getFavorites(@Path("userId") long userId);
     @GET("adverts/getPostedBy/{userId}")
     Call<List<Advertise>> getAdvertsPostedBy(@Path("userId") long userId);
+    @GET("adverts/userInfo/{userId}")
+    Call<UserAdvertInformation> getUserInformation(@Path("userId") long id);
     @Multipart
     @POST("adverts/post")
     Call<ResponseBody> createAdvert(@Part List<MultipartBody.Part> images, @Part("formDataJson") RequestBody formDataJson);
