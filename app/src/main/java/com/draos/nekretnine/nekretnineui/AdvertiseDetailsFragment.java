@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
+import com.draos.nekretnine.nekretnineui.Model.Advertise;
 import com.draos.nekretnine.nekretnineui.Services.AdvertService;
 import com.draos.nekretnine.nekretnineui.Services.RealEstateServiceGenerator;
 import com.draos.nekretnine.nekretnineui.Services.UserService;
@@ -71,6 +73,23 @@ public class AdvertiseDetailsFragment extends Fragment {
             deleteAdvert.setVisibility(View.VISIBLE);
             Bundle b = new Bundle();
             b.putLong("id",id);
+
+            AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
+            final Call<Advertise> callUpdateViewsCount = service.updateViewsCount(id);
+            callUpdateViewsCount.enqueue(new Callback<Advertise>() {
+                @Override
+                public void onResponse(Call<Advertise> call, Response<Advertise> response) {
+                    if(response.isSuccessful()) {
+
+                    }
+                }
+                @Override
+                public void onFailure(Call<Advertise> call, Throwable t) {
+                    Toast.makeText(getContext(),
+                            "An error has ocurred. Try again.",
+                            Toast.LENGTH_LONG).show();
+                }
+            });
 
         deleteAdvert.setOnClickListener(new View.OnClickListener() {
             @Override

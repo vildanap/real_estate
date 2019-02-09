@@ -33,6 +33,8 @@ public interface AdvertService {
     @Multipart
     @POST("/uploadFile")
     Call<ResponseBody> postImage(@Part List<MultipartBody.Part> images);
+    @PUT("adverts/plusView/{advertId}")
+    Call<Advertise> updateViewsCount(@Path("advertId") long id);
 
     @Multipart
     @PUT("adverts/{advertId}")
