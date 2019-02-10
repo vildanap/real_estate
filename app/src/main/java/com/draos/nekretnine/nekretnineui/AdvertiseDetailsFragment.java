@@ -100,6 +100,7 @@ public class AdvertiseDetailsFragment extends Fragment {
         tvAddress.setText(address);
         //views
 
+            // phone dialer
         imageCell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +112,24 @@ public class AdvertiseDetailsFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        //dodavanje favorita
+
+        // email open
+        imageEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                /*Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_APP_EMAIL);
+                getActivity().startActivity(intent);*/
+
+                Intent mailIntent = new Intent(Intent.ACTION_VIEW);
+                Uri data = Uri.parse("mailto:?subject=" + title + "&body=" + "" + "&to=" + email);
+                mailIntent.setData(data);
+                startActivity(Intent.createChooser(mailIntent, "Send mail to contact owner"));
+            }
+        });
+
+        //add to favourite
         if(session.isLoggedIn()){
             favoritebtn = view.findViewById(R.id.imageButtonFavorite);
             //TODO provjera je li dodan u favorite ako jeste onda imgStarFull, ako nije imgStarBorder
@@ -145,7 +163,7 @@ public class AdvertiseDetailsFragment extends Fragment {
                 }
             });
 
-
+            // edit and delete buttons only if user created ad
         }
         if(session.isLoggedIn() && Long.valueOf(userId).toString().equals(session.getUserDetails().get("email"))) {
             editAdvert=view.findViewById(R.id.editAdvert);
