@@ -134,7 +134,7 @@ public class AdvertiseDetailsFragment extends Fragment {
         if(session.isLoggedIn()){
             favoritebtn = view.findViewById(R.id.imageButtonFavorite);
             AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
-            final Call<ResponseBody> callCheckFavourite = service.checkIfFavourite(userId,id);
+            final Call<ResponseBody> callCheckFavourite = service.checkIfFavourite(Long.parseLong(session.getUserDetails().get("email")),id);
             callCheckFavourite.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -163,7 +163,7 @@ public class AdvertiseDetailsFragment extends Fragment {
                         favoritebtn.setImageResource(imgStarFull);
                         isFavourite = true;
                         AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
-                        final Call<ResponseBody> call = service.addFavorite(userId,id);
+                        final Call<ResponseBody> call = service.addFavorite(Long.parseLong(session.getUserDetails().get("email")),id);
                         call.enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -187,7 +187,7 @@ public class AdvertiseDetailsFragment extends Fragment {
                     else{
                         favoritebtn.setImageResource(imgStarBorder);
                         AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
-                        final Call<ResponseBody> call = service.removeFavourite(userId,id);
+                        final Call<ResponseBody> call = service.removeFavourite(Long.parseLong(session.getUserDetails().get("email")),id);
                         call.enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
