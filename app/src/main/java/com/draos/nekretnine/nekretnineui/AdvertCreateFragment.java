@@ -143,7 +143,7 @@ public class AdvertCreateFragment extends Fragment {
         });
 
         btnReset = view.findViewById(R.id.buttonResetAdvert);
-        //TODO Upload slika
+
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

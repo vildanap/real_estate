@@ -3,27 +3,284 @@
                                              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                                              android:layout_height="match_parent">
 
-    <TextView
-            android:text="Title"
-            android:layout_width="297dp"
-            android:layout_height="89dp" android:id="@+id/textView_adTitle"/>
-    <Button
-            android:text="DELETE ADVERT"
-            android:layout_width="164dp"
-            android:layout_height="50dp"
-            android:id="@+id/deleteAdvert" android:textColor="@color/colorRed"
-            android:visibility="invisible" android:layout_marginStart="8dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp" android:layout_marginTop="200dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView_adTitle" app:layout_constraintHorizontal_bias="0.039"/>
-    <Button
-            android:text="EDIT ADVERT"
-            android:layout_width="164dp"
-            android:layout_height="50dp"
-            android:id="@+id/editAdvert" android:textColor="@color/colorAccent"
-            android:visibility="invisible" app:layout_constraintStart_toEndOf="@+id/deleteAdvert"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginTop="200dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView_adTitle" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
-            app:layout_constraintHorizontal_bias="0.0"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+    >
+        <TextView
+                android:text="Title"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_adTitle" android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:srcCompat="@drawable/ic_star_border"
+                android:id="@+id/imageButtonFavorite" android:layout_weight="1"
+                android:background="@android:color/transparent"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            android:id="@+id/linearLayout19" android:layout_marginTop="70dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp">
+        <TextView
+                android:text="Number of views:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textView31"
+                android:gravity="left"
+                android:textStyle="bold"/>
+        <TextView
+                android:text="0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/textView32Views"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout19" android:id="@+id/linearLayout20"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp">
+        <TextView
+                android:text="Advert type:"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/textView27" android:layout_weight="1"/>
+        <TextView
+                android:text="Sale/Rental"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+
+                android:layout_weight="1" android:id="@+id/textView28adType"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/linearLayout20"
+            android:id="@+id/linearLayout21" app:layout_constraintEnd_toEndOf="parent" android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp" android:layout_marginRight="8dp">
+        <TextView
+                android:text="Description:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:id="@+id/textView19"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:id="@+id/textViewDescription"/>
+    </LinearLayout>
+    <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimaryDark" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout21"
+            android:layout_marginTop="16dp" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout22" app:layout_constraintVertical_bias="0.6"
+            android:id="@+id/view" android:layout_marginLeft="16dp" android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" android:layout_marginRight="16dp"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/linearLayout22" app:layout_constraintEnd_toEndOf="parent" android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+            android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/view">
+        <TextView
+                android:text="Price:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:id="@+id/textView21" android:layout_weight="1"/>
+        <TextView
+                android:text="0.0 BAM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/TextViewPrice" android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout22" android:id="@+id/linearLayout23"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp">
+        <TextView
+                android:text="Area:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:id="@+id/textView23" android:layout_weight="1"/>
+        <TextView
+                android:text="0.0 squares"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/textViewArea" android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout24" android:id="@+id/linearLayout25"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp">
+        <TextView
+                android:text="Number of rooms:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:id="@+id/textView25" android:layout_weight="1"/>
+        <TextView
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/textViewRooms" android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout23" android:id="@+id/linearLayout24"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp">
+        <TextView
+                android:text="Property type:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:id="@+id/textView29" android:layout_weight="1"/>
+        <TextView
+                android:text="Apartment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/textView30Property" android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout25" android:id="@+id/linearLayout27"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp">
+        <TextView
+                android:text="Settlement:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:id="@+id/textView33" android:layout_weight="1"/>
+        <TextView
+                android:text="Settlement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/textView34Settlement" android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout27" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" android:layout_marginRight="8dp" android:id="@+id/linearLayout28">
+        <TextView
+                android:text="Address:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:id="@+id/textView35" android:layout_weight="1"/>
+        <TextView
+                android:text="Adresa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:id="@+id/textView36Address" android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+            android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/linearLayout29">
+        <Button
+                android:text="DELETE ADVERT"
+                android:layout_width="164dp"
+                android:layout_height="50dp"
+                android:id="@+id/deleteAdvert" android:textColor="@color/colorRed"
+                android:visibility="invisible" android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
+                app:layout_constraintHorizontal_bias="0.039" tools:layout_editor_absoluteY="289dp"/>
+        <Button
+                android:text="EDIT ADVERT"
+                android:layout_width="164dp"
+                android:layout_height="50dp"
+                android:id="@+id/editAdvert" android:textColor="@color/colorAccent"
+                android:visibility="invisible" app:layout_constraintStart_toEndOf="@+id/deleteAdvert"
+                android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
+                app:layout_constraintHorizontal_bias="0.0" tools:layout_editor_absoluteY="289dp"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout28" android:id="@+id/linearLayout29">
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:srcCompat="@android:drawable/sym_action_call"
+                android:id="@+id/imageButton2Call" android:layout_weight="1"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:srcCompat="@android:drawable/sym_action_email"
+                android:id="@+id/imageButton3Email" android:layout_weight="1"/>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

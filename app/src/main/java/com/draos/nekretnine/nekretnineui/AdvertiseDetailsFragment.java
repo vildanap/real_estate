@@ -18,6 +18,8 @@ import com.draos.nekretnine.nekretnineui.Model.Advertise;
 import com.draos.nekretnine.nekretnineui.Services.AdvertService;
 import com.draos.nekretnine.nekretnineui.Services.RealEstateServiceGenerator;
 import com.draos.nekretnine.nekretnineui.Services.UserService;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import org.w3c.dom.Text;
 import retrofit2.Call;
@@ -41,8 +43,10 @@ public class AdvertiseDetailsFragment extends Fragment {
 
     Button editAdvert,deleteAdvert;
     ImageView adTypePhoto;
-    String title,price,description,area,rooms,advertType;
+    String title,price,description,area,rooms,advertType, propertyType, address, settlement;
     Long id,userId;
+    ImageButton favoritebtn;
+    TextView tvDescription, tvPrice,tvArea,tvRooms,tvViews,tvPropertyType,tvAdvertType,tvSettlement,tvAddress;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,22 +54,83 @@ public class AdvertiseDetailsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_advertise_details, container, false);
         TextView adTitle = view.findViewById(R.id.textView_adTitle);
+
+        final int imgStarFull = R.drawable.ic_star;
+        final int imgStarBorder = R.drawable.ic_star_border;
+        tvAddress = view.findViewById(R.id.textView36Address);
+        tvAdvertType = view.findViewById(R.id.textView28adType);
+        tvPropertyType = view.findViewById(R.id.textView30Property);
+        tvArea = view.findViewById(R.id.textViewArea);
+        tvDescription = view.findViewById(R.id.textViewDescription);
+        tvPrice = view.findViewById(R.id.TextViewPrice);
+        tvViews = view.findViewById(R.id.textView32Views);
+        tvSettlement = view.findViewById(R.id.textView34Settlement);
+        tvRooms = view.findViewById(R.id.textViewRooms);
+
         Bundle bundle = this.getArguments();
         if(bundle != null) {
-           title = bundle.get("title").toString();
+            title = bundle.get("title").toString();
             price = bundle.get("price").toString();
             description = bundle.get("description").toString();
             area=bundle.getString("area");
             rooms=bundle.getString("rooms");
             advertType=bundle.getString("advertType");
+            address = bundle.getString("address");
+            settlement = bundle.getString("settlement");
+            propertyType = bundle.getString("propertyType");
             id=bundle.getLong("id");
-           userId=bundle.getLong("userId");
+            userId=bundle.getLong("userId");
 
             adTitle.setText(title);
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
+        }
+        //postavljanje oglasa
+        tvPrice.setText(price + " BAM");
+        tvDescription.setText(description);
+        tvArea.setText(area + " squares");
+        tvAdvertType.setText(advertType);
+        tvRooms.setText(rooms);
+        tvPropertyType.setText(propertyType);
+        tvSettlement.setText(settlement);
+        tvAddress.setText(address);
+        //views
+
+        //dodavanje favorita
+        if(session.isLoggedIn()){
+            favoritebtn = view.findViewById(R.id.imageButtonFavorite);
+            //TODO provjera je li dodan u favorite ako jeste onda imgStarFull, ako nije imgStarBorder
+            favoritebtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    favoritebtn.setImageResource(imgStarFull);
+                    AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
+                    final Call<ResponseBody> call = service.addFavorite(userId,id);
+                    call.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.code() == 201) {
+                                Toast.makeText(getContext(),
+                                        "Advert added to favourites.",
+                                        Toast.LENGTH_LONG).show();
+                            } else {
+                                System.out.println(response.errorBody());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Toast.makeText(getContext(),
+                                    "An error has occured. Please try again.",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                }
+            });
+
 
         }
-
         if(session.isLoggedIn() && Long.valueOf(userId).toString().equals(session.getUserDetails().get("email"))) {
             editAdvert=view.findViewById(R.id.editAdvert);
             deleteAdvert=view.findViewById(R.id.deleteAdvert);
@@ -115,7 +180,7 @@ public class AdvertiseDetailsFragment extends Fragment {
                    adTypePhoto.setImageResource(R.drawable.rent);
                    LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(500,300);
                    layoutParams.gravity=Gravity.CENTER;
-               adTypePhoto.setLayoutParams(layoutParams);}
+                adTypePhoto.setLayoutParams(layoutParams);}
                 titleField.setText(title);
                 descriptionField.setText(description);
                 priceField.setText(price);

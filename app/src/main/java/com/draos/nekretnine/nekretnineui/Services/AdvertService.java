@@ -27,6 +27,8 @@ public interface AdvertService {
     Call<List<Advertise>> getAdvertsPostedBy(@Path("userId") long userId);
     @GET("adverts/userInfo/{userId}")
     Call<UserAdvertInformation> getUserInformation(@Path("userId") long id);
+    @POST("adverts/post/favorite/{userId}/{advertId}")
+    Call<ResponseBody> addFavorite(@Path("userId") long userId,@Path("advertId") long advertId);
     @Multipart
     @POST("adverts/post")
     Call<ResponseBody> createAdvert(@Part List<MultipartBody.Part> images, @Part("formDataJson") RequestBody formDataJson);
@@ -35,11 +37,9 @@ public interface AdvertService {
     Call<ResponseBody> postImage(@Part List<MultipartBody.Part> images);
     @PUT("adverts/plusView/{advertId}")
     Call<Advertise> updateViewsCount(@Path("advertId") long id);
-
     @Multipart
     @PUT("adverts/{advertId}")
     Call<ResponseBody> updateAdvert(@Path("advertId") long id,@Part List<MultipartBody.Part> images, @Part("formDataJson") RequestBody formDataJson);
-
     @DELETE("/adverts/{advertId}")
     Call<ResponseBody> deleteAdvert(@Path("advertId") long id);
 

@@ -33,10 +33,15 @@ public class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.MyVi
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Advertise movie = advertiseList.get(position);
         holder.adTitle.setText(movie.getTitle());
-        holder.adPrice.setText(String.valueOf(movie.getPrice()));
+        holder.adPrice.setText(String.valueOf(movie.getPrice())+ " BAM");
         holder.adArea.setText(String.valueOf(movie.getArea()) + " squares");
         holder.imageView.setImageResource(R.drawable.sale);
-        holder.adDescription.setText(movie.getDescription());
+        if(movie.getDescription().length()>140) {
+            holder.adDescription.setText(movie.getDescription().substring(0, 140)+ "...");
+        }
+        else {
+            holder.adDescription.setText(movie.getDescription());
+        }
         }
     @Override
     public int getItemCount() {
@@ -74,6 +79,9 @@ public class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.MyVi
                     bundle.putString("rooms",String.valueOf(a.getNumberOfRooms()));
                     bundle.putLong("id",a.getId());
                     bundle.putString("advertType",a.getAdvertType());
+                    bundle.putString("propertyType",a.getPropertyType());
+                    bundle.putString("address", a.getAddress());
+                    bundle.putString("settlement", a.getLocation().getSettlement());
                     bundle.putLong("userId",a.getUser().getId());
                     AdvertiseDetailsFragment advertiseDetails = new AdvertiseDetailsFragment();
                     advertiseDetails.setArguments(bundle);
