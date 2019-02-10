@@ -185,6 +185,7 @@ public class AdvertiseDetailsFragment extends Fragment {
                         });
                     }
                     else{
+                        isFavourite=false;
                         favoritebtn.setImageResource(imgStarBorder);
                         AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
                         final Call<ResponseBody> call = service.removeFavourite(Long.parseLong(session.getUserDetails().get("email")),id);

@@ -203,7 +203,7 @@ public class AdvertiseFragment extends Fragment {
                     } else {
                         System.out.println(response.message());
                         Toast.makeText(getContext(),
-                                "Username or password not correct",
+                                "No adverts for sale yet",
                                 LENGTH_LONG).show();
                     }
                 }
@@ -249,7 +249,7 @@ public class AdvertiseFragment extends Fragment {
                     } else {
                         System.out.println(response.message());
                         Toast.makeText(getContext(),
-                                "Username or password not correct",
+                                "No adverts for rent yet",
                                 LENGTH_LONG).show();
                     }
                 }
@@ -379,7 +379,7 @@ public class AdvertiseFragment extends Fragment {
                     } else {
                         System.out.println(response.message());
                         Toast.makeText(getContext(),
-                                "Username or password not correct",
+                                "No favourites adverts yet",
                                 LENGTH_LONG).show();
                     }
                 }
