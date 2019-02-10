@@ -47,6 +47,7 @@ public class AdvertiseDetailsFragment extends Fragment {
     ImageView adTypePhoto;
     String title,price,description,area,rooms,advertType, propertyType, address, settlement, phone, email;
     Long id,userId;
+    Boolean isFavourite;
     ImageButton favoritebtn,imageCell,imageEmail;
     TextView tvDescription, tvPrice,tvArea,tvRooms,tvViews,tvPropertyType,tvAdvertType,tvSettlement,tvAddress;
     @Override
@@ -129,40 +130,87 @@ public class AdvertiseDetailsFragment extends Fragment {
             }
         });
 
-        //add to favourite
+        //dodavanje favorita
         if(session.isLoggedIn()){
             favoritebtn = view.findViewById(R.id.imageButtonFavorite);
-            //TODO provjera je li dodan u favorite ako jeste onda imgStarFull, ako nije imgStarBorder
+            AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
+            final Call<ResponseBody> callCheckFavourite = service.checkIfFavourite(userId,id);
+            callCheckFavourite.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.code() == 200) {
+                        favoritebtn.setImageResource(imgStarFull);
+                        isFavourite = true;
+                    } else {
+                        favoritebtn.setImageResource(imgStarBorder);
+                        isFavourite = false;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(getContext(),
+                            "An error has occured.",
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+
             favoritebtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
                 {
-                    favoritebtn.setImageResource(imgStarFull);
-                    AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
-                    final Call<ResponseBody> call = service.addFavorite(userId,id);
-                    call.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            if (response.code() == 201) {
-                                Toast.makeText(getContext(),
-                                        "Advert added to favourites.",
-                                        Toast.LENGTH_LONG).show();
-                            } else {
-                                System.out.println(response.errorBody());
+                    if(!isFavourite){
+                        favoritebtn.setImageResource(imgStarFull);
+                        isFavourite = true;
+                        AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
+                        final Call<ResponseBody> call = service.addFavorite(userId,id);
+                        call.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.code() == 201) {
+                                    Toast.makeText(getContext(),
+                                            "Advert added to favourites.",
+                                            Toast.LENGTH_LONG).show();
+                                } else {
+                                    System.out.println(response.errorBody());
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            Toast.makeText(getContext(),
-                                    "An error has occured. Please try again.",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                Toast.makeText(getContext(),
+                                        "An error has occured. Please try again.",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                    else{
+                        favoritebtn.setImageResource(imgStarBorder);
+                        AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
+                        final Call<ResponseBody> call = service.removeFavourite(userId,id);
+                        call.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.code() == 200) {
+                                    Toast.makeText(getContext(),
+                                            "Advert removed from favourites.",
+                                            Toast.LENGTH_LONG).show();
+                                } else {
+                                    System.out.println(response.errorBody());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                Toast.makeText(getContext(),
+                                        "An error has occured. Please try again.",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
 
                 }
             });
-
             // edit and delete buttons only if user created ad
         }
         if(session.isLoggedIn() && Long.valueOf(userId).toString().equals(session.getUserDetails().get("email"))) {

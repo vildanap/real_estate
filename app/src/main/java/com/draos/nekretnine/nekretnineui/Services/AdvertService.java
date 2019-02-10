@@ -42,6 +42,10 @@ public interface AdvertService {
     Call<ResponseBody> updateAdvert(@Path("advertId") long id,@Part List<MultipartBody.Part> images, @Part("formDataJson") RequestBody formDataJson);
     @DELETE("/adverts/{advertId}")
     Call<ResponseBody> deleteAdvert(@Path("advertId") long id);
+    @DELETE("/adverts/favorite/{userId}/{advertId}")
+    Call<ResponseBody> removeFavourite(@Path("userId") long userId, @Path("advertId") long advertId);
+    @GET("adverts/favorite/{userId}/{advertId}")
+    Call<ResponseBody> checkIfFavourite(@Path("userId") long userId, @Path("advertId") long advertId);
 
 
 }
