@@ -83,6 +83,8 @@ public class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.MyVi
                     bundle.putString("address", a.getAddress());
                     bundle.putString("settlement", a.getLocation().getSettlement());
                     bundle.putLong("userId",a.getUser().getId());
+                    bundle.putString("phone",a.getUser().getTelephone());
+                    bundle.putString("email",a.getUser().getEmail());
                     AdvertiseDetailsFragment advertiseDetails = new AdvertiseDetailsFragment();
                     advertiseDetails.setArguments(bundle);
 

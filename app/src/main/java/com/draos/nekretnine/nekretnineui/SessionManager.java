@@ -40,6 +40,7 @@ public class SessionManager {
     public static final String KEY_SURNAME = "surname";
 
 
+
     // Constructor
     public SessionManager(Context context){
         this._context = context;
@@ -63,6 +64,7 @@ public class SessionManager {
         editor.putString(KEY_FIRSTNAME,firstname);
 
         editor.putString(KEY_SURNAME,surname);
+
 
         // commit changes
         editor.commit();
@@ -101,6 +103,8 @@ public class SessionManager {
         user.put(KEY_FIRSTNAME, pref.getString(KEY_FIRSTNAME, null));
 
         user.put(KEY_SURNAME, pref.getString(KEY_SURNAME, null));
+
+
 
 
         // return user

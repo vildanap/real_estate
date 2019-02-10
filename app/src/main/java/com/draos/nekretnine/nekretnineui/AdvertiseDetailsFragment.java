@@ -2,8 +2,10 @@ package com.draos.nekretnine.nekretnineui;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -43,9 +45,9 @@ public class AdvertiseDetailsFragment extends Fragment {
 
     Button editAdvert,deleteAdvert;
     ImageView adTypePhoto;
-    String title,price,description,area,rooms,advertType, propertyType, address, settlement;
+    String title,price,description,area,rooms,advertType, propertyType, address, settlement, phone, email;
     Long id,userId;
-    ImageButton favoritebtn;
+    ImageButton favoritebtn,imageCell,imageEmail;
     TextView tvDescription, tvPrice,tvArea,tvRooms,tvViews,tvPropertyType,tvAdvertType,tvSettlement,tvAddress;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,7 +68,8 @@ public class AdvertiseDetailsFragment extends Fragment {
         tvViews = view.findViewById(R.id.textView32Views);
         tvSettlement = view.findViewById(R.id.textView34Settlement);
         tvRooms = view.findViewById(R.id.textViewRooms);
-
+        imageCell = view.findViewById(R.id.imageButton2Call);
+        imageEmail = view.findViewById(R.id.imageButton3Email);
         Bundle bundle = this.getArguments();
         if(bundle != null) {
             title = bundle.get("title").toString();
@@ -80,6 +83,8 @@ public class AdvertiseDetailsFragment extends Fragment {
             propertyType = bundle.getString("propertyType");
             id=bundle.getLong("id");
             userId=bundle.getLong("userId");
+            phone = bundle.getString("phone");
+            email = bundle.getString("email");
 
             adTitle.setText(title);
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
@@ -95,6 +100,17 @@ public class AdvertiseDetailsFragment extends Fragment {
         tvAddress.setText(address);
         //views
 
+        imageCell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                // Send phone number to intent as data
+                intent.setData(Uri.parse("tel:" + phone));
+                // Start the dialer app activity with number
+                startActivity(intent);
+            }
+        });
         //dodavanje favorita
         if(session.isLoggedIn()){
             favoritebtn = view.findViewById(R.id.imageButtonFavorite);
@@ -136,6 +152,8 @@ public class AdvertiseDetailsFragment extends Fragment {
             deleteAdvert=view.findViewById(R.id.deleteAdvert);
             editAdvert.setVisibility(View.VISIBLE);
             deleteAdvert.setVisibility(View.VISIBLE);
+            imageEmail.setVisibility(View.INVISIBLE);
+            imageCell.setVisibility(View.INVISIBLE);
             Bundle b = new Bundle();
             b.putLong("id",id);
 
