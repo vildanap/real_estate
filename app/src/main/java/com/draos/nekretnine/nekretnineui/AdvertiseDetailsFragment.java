@@ -45,7 +45,7 @@ public class AdvertiseDetailsFragment extends Fragment {
 
     Button editAdvert,deleteAdvert;
     ImageView adTypePhoto;
-    String title,price,description,area,rooms,advertType, propertyType, address, settlement, phone, email;
+    String title,price,description,area,rooms,advertType, propertyType, address, settlement, phone, email, viewsNumber;
     Long id,userId;
     Boolean isFavourite;
     ImageButton favoritebtn,imageCell,imageEmail;
@@ -86,11 +86,12 @@ public class AdvertiseDetailsFragment extends Fragment {
             userId=bundle.getLong("userId");
             phone = bundle.getString("phone");
             email = bundle.getString("email");
-
+            viewsNumber = bundle.getString("views");
             adTitle.setText(title);
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
         }
         //postavljanje oglasa
+        tvViews.setText(viewsNumber);
         tvPrice.setText(price + " BAM");
         tvDescription.setText(description);
         tvArea.setText(area + " squares");
