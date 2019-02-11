@@ -28,23 +28,24 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="27dp" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             android:id="@+id/linearLayout19" android:layout_marginTop="45dp" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp">
         <TextView
                 android:text="Number of views:"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/textView31"
+                android:layout_height="57dp" android:id="@+id/textView31"
                 android:gravity="left"
-                android:textStyle="bold"/>
+                android:textStyle="bold" android:textColor="@color/colorInfo"/>
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                android:id="@+id/textView32Views"/>
+                android:gravity="end"
+                android:id="@+id/textView32Views" android:text="jsjsjjsjsjsjs" tools:text="@string/views"
+                android:textColor="@color/colorInfo"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"

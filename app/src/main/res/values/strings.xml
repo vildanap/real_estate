@@ -41,6 +41,7 @@
         settlement and number of rooms.
     </string>
     <string name="helpText"/>
+    <string name="views">View</string>
 
 
 </resources>

@@ -49,7 +49,7 @@ public class AdvertiseDetailsFragment extends Fragment {
     Long id,userId;
     Boolean isFavourite;
     ImageButton favoritebtn,imageCell,imageEmail;
-    TextView tvDescription, tvPrice,tvArea,tvRooms,tvViews,tvPropertyType,tvAdvertType,tvSettlement,tvAddress;
+    TextView tvDescription, tvPrice,tvArea,tvRooms,tvViews,tvPropertyType,tvAdvertType,tvSettlement,tvAddress, viewText;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,6 +71,8 @@ public class AdvertiseDetailsFragment extends Fragment {
         tvRooms = view.findViewById(R.id.textViewRooms);
         imageCell = view.findViewById(R.id.imageButton2Call);
         imageEmail = view.findViewById(R.id.imageButton3Email);
+        favoritebtn = view.findViewById(R.id.imageButtonFavorite);
+        viewText = view.findViewById(R.id.textView31);
         Bundle bundle = this.getArguments();
         if(bundle != null) {
             title = bundle.get("title").toString();
@@ -91,7 +93,9 @@ public class AdvertiseDetailsFragment extends Fragment {
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
         }
         //postavljanje oglasa
-        tvViews.setText(viewsNumber);
+      //  tvViews.setText(viewsNumber);
+        System.out.println(viewsNumber);
+        viewText.setText("Reviewed "+viewsNumber+ " times");
         tvPrice.setText(price + " BAM");
         tvDescription.setText(description);
         tvArea.setText(area + " squares");
@@ -131,7 +135,16 @@ public class AdvertiseDetailsFragment extends Fragment {
             }
         });
 
-        
+        favoritebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(getContext(),
+                        "Login/Register to add advert to your favourites",
+                        Toast.LENGTH_LONG).show();
+
+            }
+        });
         // views update not allowed for user who created ad
         if(!session.isLoggedIn() || (session.isLoggedIn() && !Long.valueOf(userId).toString().equals(session.getUserDetails().get("email")))){
         AdvertService service2 = RealEstateServiceGenerator.createService(AdvertService.class);
@@ -152,7 +165,7 @@ public class AdvertiseDetailsFragment extends Fragment {
         });}
         //dodavanje favorita
         if(session.isLoggedIn()){
-            favoritebtn = view.findViewById(R.id.imageButtonFavorite);
+         //   favoritebtn = view.findViewById(R.id.imageButtonFavorite);
             AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
             final Call<ResponseBody> callCheckFavourite = service.checkIfFavourite(Long.parseLong(session.getUserDetails().get("email")),id);
             callCheckFavourite.enqueue(new Callback<ResponseBody>() {
