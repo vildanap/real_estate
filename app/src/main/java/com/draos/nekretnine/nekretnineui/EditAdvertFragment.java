@@ -32,7 +32,7 @@ public class EditAdvertFragment extends Fragment {
     Spinner spinnerSettlement;
     Spinner spinnerAdvertType;
     Spinner spinnerPropertyType;
-    int iCurrentSelection;
+    int iCurrentSelection, settlementId;
     Button btnCreate;
     EditText title;
     EditText description;
@@ -89,35 +89,6 @@ public class EditAdvertFragment extends Fragment {
         rooms = view.findViewById(R.id.number_picker2);
         address = view.findViewById(R.id.editTextadAddress);
 
-        AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
-        final Call<Advertise> call = service.getAdvertise(id);
-        call.enqueue(new Callback<Advertise>() {
-            @Override
-            public void onResponse(Call<Advertise> call, Response<Advertise> response) {
-                if(response.isSuccessful()) {
-                  title.setText((response.body().getTitle()));
-                  description.setText(response.body().getDescription());
-                  price.setText(String.valueOf(Math.round(response.body().getPrice())));
-                  area.setText(String.valueOf(response.body().getArea()));
-                  rooms.setValue(Integer.valueOf(String.valueOf(response.body().getNumberOfRooms())));
-                  address.setText(response.body().getAddress());
-                //TODO: spinnerAdvert and spinnerCity
-                } else {
-                    System.out.println(response.message());
-                    Toast.makeText(getContext(),
-                            "Error",
-                            Toast.LENGTH_LONG).show();
-                 //   pb.setVisibility(View.INVISIBLE);
-                }
-            }
-            @Override
-            public void onFailure(Call<Advertise> call, Throwable t) {
-                Toast.makeText(getContext(),
-                        "An error has ocurred.Try again.",
-                        Toast.LENGTH_LONG).show();
-              //  pb.setVisibility(View.INVISIBLE);
-            }
-        });
         //TODO Retrofit populate spinneres
         String[] cities = new String[]{"Sarajevo", "Tuzla", "Mostar"};
         String[] adType = new String[]{"Sale","Rent"};
@@ -136,7 +107,83 @@ public class EditAdvertFragment extends Fragment {
         ArrayAdapter<String> adapterSettlement = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item,sarajevoSettlement );
         spinnerSettlement.setAdapter(adapterSettlement);
 
-       // iCurrentSelection = 0;
+        iCurrentSelection = 0;
+
+        AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
+        final Call<Advertise> call = service.getAdvertise(id);
+        call.enqueue(new Callback<Advertise>() {
+            @Override
+            public void onResponse(Call<Advertise> call, Response<Advertise> response) {
+                if(response.isSuccessful()) {
+                    System.out.println(response.body().toString());
+                  title.setText((response.body().getTitle()));
+                  description.setText(response.body().getDescription());
+                  price.setText(String.valueOf(Math.round(response.body().getPrice())));
+                  area.setText(String.valueOf(response.body().getArea()));
+                  rooms.setValue(Integer.valueOf(String.valueOf(response.body().getNumberOfRooms())));
+                  address.setText(response.body().getAddress());
+                  String settlement=response.body().getLocation().getSettlement();
+              // String city = response.body().getLocation().getCity().getName();
+               //   if(city.equals("Mostar"))
+                //      spinnerCities.setSelection(2);
+
+                  if(settlement.equals("Brankovac")){
+                  spinnerCities.setSelection(2);
+                  spinnerSettlement.setSelection(0);
+                 }
+                  if(settlement.equals("Bijeli Brijeg")){
+                      spinnerCities.setSelection(2);
+                      spinnerSettlement.setSelection(1);
+                     }
+                  if(settlement.equals("Zalik")){
+                      spinnerCities.setSelection(2);
+                      spinnerSettlement.setSelection(2);
+                     }
+                  if(settlement.equals("Grbavica")) {
+                      spinnerCities.setSelection(0);
+                      spinnerSettlement.setSelection(2);
+                  }
+                  if(settlement.equals("Pofalici"))
+                  {
+                      spinnerCities.setSelection(0);
+                      spinnerSettlement.setSelection(0);
+                  }
+                    if(settlement.equals("Ciglane"))
+                    {
+                        spinnerCities.setSelection(0);
+                        spinnerSettlement.setSelection(1);
+                    }
+                    if(settlement.equals("Mosnik")){
+                        spinnerCities.setSelection(1);
+                        spinnerSettlement.setSelection(0);
+                    }
+                    if(settlement.equals("Slatina")){
+                        spinnerCities.setSelection(1);
+                        spinnerSettlement.setSelection(1);
+                    }
+                    if(settlement.equals("Miladije")){
+                        spinnerCities.setSelection(1);
+                        spinnerSettlement.setSelection(2);
+                    }
+
+                //TODO: spinnerAdvert and spinnerCity
+                } else {
+                    System.out.println(response.message());
+                    Toast.makeText(getContext(),
+                            "Error",
+                            Toast.LENGTH_LONG).show();
+                 //   pb.setVisibility(View.INVISIBLE);
+                }
+            }
+            @Override
+            public void onFailure(Call<Advertise> call, Throwable t) {
+                Toast.makeText(getContext(),
+                        "An error has ocurred.Try again.",
+                        Toast.LENGTH_LONG).show();
+              //  pb.setVisibility(View.INVISIBLE);
+            }
+        });
+
 
         spinnerCities.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -220,6 +267,7 @@ public class EditAdvertFragment extends Fragment {
                     args.putLong("numberOfRooms",rooms.getValue());
                     args.putString("type","edit");
                     args.putLong("id",id);
+                    //args.putString("city",spinnerSettlement);
                     fragment.setArguments(args);
 
 
