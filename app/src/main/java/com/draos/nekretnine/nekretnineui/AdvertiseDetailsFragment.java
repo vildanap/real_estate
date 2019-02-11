@@ -131,6 +131,25 @@ public class AdvertiseDetailsFragment extends Fragment {
             }
         });
 
+        
+        // views update not allowed for user who created ad
+        if(!session.isLoggedIn() || (session.isLoggedIn() && !Long.valueOf(userId).toString().equals(session.getUserDetails().get("email")))){
+        AdvertService service2 = RealEstateServiceGenerator.createService(AdvertService.class);
+        final Call<Advertise> callUpdateViewsCount = service2.updateViewsCount(id);
+        callUpdateViewsCount.enqueue(new Callback<Advertise>() {
+            @Override
+            public void onResponse(Call<Advertise> call, Response<Advertise> response) {
+                if(response.isSuccessful()) {
+
+                }
+            }
+            @Override
+            public void onFailure(Call<Advertise> call, Throwable t) {
+                Toast.makeText(getContext(),
+                        "An error has ocurred. Try again.",
+                        Toast.LENGTH_LONG).show();
+            }
+        });}
         //dodavanje favorita
         if(session.isLoggedIn()){
             favoritebtn = view.findViewById(R.id.imageButtonFavorite);
@@ -213,8 +232,9 @@ public class AdvertiseDetailsFragment extends Fragment {
 
                 }
             });
-            // edit and delete buttons only if user created ad
+
         }
+        // edit and delete buttons only if user created ad
         if(session.isLoggedIn() && Long.valueOf(userId).toString().equals(session.getUserDetails().get("email"))) {
             editAdvert=view.findViewById(R.id.editAdvert);
             deleteAdvert=view.findViewById(R.id.deleteAdvert);
@@ -225,22 +245,7 @@ public class AdvertiseDetailsFragment extends Fragment {
             Bundle b = new Bundle();
             b.putLong("id",id);
 
-            AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
-            final Call<Advertise> callUpdateViewsCount = service.updateViewsCount(id);
-            callUpdateViewsCount.enqueue(new Callback<Advertise>() {
-                @Override
-                public void onResponse(Call<Advertise> call, Response<Advertise> response) {
-                    if(response.isSuccessful()) {
 
-                    }
-                }
-                @Override
-                public void onFailure(Call<Advertise> call, Throwable t) {
-                    Toast.makeText(getContext(),
-                            "An error has ocurred. Try again.",
-                            Toast.LENGTH_LONG).show();
-                }
-            });
 
         deleteAdvert.setOnClickListener(new View.OnClickListener() {
             @Override
