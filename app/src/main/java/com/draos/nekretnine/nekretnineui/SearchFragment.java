@@ -16,6 +16,7 @@ import com.appyvet.materialrangebar.RangeBar;
 public class SearchFragment extends Fragment {
     private OnFragmentInteractionListener listener;
 
+    int iCurrentSelection;
     Button resetbtn;
     Button searchbtn;
     Switch rentals;
@@ -54,10 +55,41 @@ public class SearchFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, items);
         cities.setAdapter(adapter);
 
-        //TODO retrofit
-        String[] items2 = new String[]{"All","Pofalici", "Grbavica", "Ciglane"};
+        String[] items2 = new String[]{"All"};
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, items2);
         settlements.setAdapter(adapter2);
+
+        cities.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (iCurrentSelection != i){
+                    // Your code here
+                    String[] SettlementSa= null;
+                    if(i==0){
+                        SettlementSa= new String[]{"All"};
+                    }
+                    if(i==1){
+                        SettlementSa= new String[]{"All","Pofalici", "Ciglane", "Grbavica"};
+                    }
+                    else if(i==2){
+                        SettlementSa = new String[]{"All","Mosnik", "Slatina", "Miladije"};
+                    }
+                    else if(i==3)
+                    {
+                        SettlementSa = new String[]{"All","Brankovac", "Bijeli Brijeg", "Zalik"};
+
+                    }
+                    ArrayAdapter<String> adapterProperty = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item,SettlementSa );
+                    settlements.setAdapter(adapterProperty);
+
+                }
+                iCurrentSelection = i;
+            }
+
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                return;
+            }
+        });
+
 
         //Zato sto po defaultu dozvoljava samo 4 cifre, ovako citav broj prikaze
         rangeBarPrice.setPinTextFormatter(new RangeBar.PinTextFormatter() {
@@ -100,7 +132,36 @@ public class SearchFragment extends Fragment {
                 Fragment fragment =  new AdvertiseFragment();
                 //Put the value
                 Bundle args = new Bundle();
-                args.putString("ClickedCard", "rentals");
+                args.putString("Search", "Search");
+                if(sale == true && rent==true){
+                    args.putLong("advertType", 3);
+                }
+                else if(sale == true && rent == false){
+                    args.putLong("advertType", 2);
+                }
+                else if(sale == false && rent == true){
+                    args.putLong("advertType", 1);
+                }
+
+                args.putLong("minPrice", minPrice.longValue());
+                args.putLong("maxPrice", maxPrice.longValue());
+                args.putLong("rooms", rooms);
+
+                if((settlement == 0 && city==0) || settlement==0){
+                    args.putLong("settlement", 0);
+                }
+                else if (city==1){
+                    args.putLong("settlement", settlement);
+                }
+                else if(city == 2){
+                    args.putLong("settlement", settlement + 3);
+
+                }
+                else if (city == 3){
+                    args.putLong("settlement", settlement+ 6);
+                }
+                args.putLong("city", city);
+                Log.d("Searchhh", args.toString());
                 fragment.setArguments(args);
 
                 //Inflate the fragment

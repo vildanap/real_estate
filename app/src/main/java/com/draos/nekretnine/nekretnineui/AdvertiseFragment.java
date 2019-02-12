@@ -18,10 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-import com.draos.nekretnine.nekretnineui.Model.Advertise;
-import com.draos.nekretnine.nekretnineui.Model.City;
-import com.draos.nekretnine.nekretnineui.Model.Location;
-import com.draos.nekretnine.nekretnineui.Model.User;
+import com.draos.nekretnine.nekretnineui.Model.*;
 import com.draos.nekretnine.nekretnineui.Services.AdvertService;
 import com.draos.nekretnine.nekretnineui.Services.RealEstateServiceGenerator;
 import retrofit2.Call;
@@ -59,7 +56,7 @@ public class AdvertiseFragment extends Fragment {
        cardClicked = getArguments().getString("ClickedCard");
         String favourites = getArguments().getString("favourites");
         String myAdverts = getArguments().getString("myAdverts");
-
+        String search =  getArguments().getString("Search");
         session = new SessionManager(this.getContext());
         if(session.isLoggedIn())
          userId = Long.valueOf(session.getUserDetails().get("email"));
@@ -85,6 +82,18 @@ public class AdvertiseFragment extends Fragment {
         if(myAdverts != null){
             getPostedBy(userId);
         }
+
+        if(search != null){
+            AdvertSearch as = new AdvertSearch();
+            as.setAdvertType(getArguments().getLong("advertType"));
+            as.setCityId(getArguments().getLong("city"));
+            as.setLocationId(getArguments().getLong("settlement"));
+            as.setNumberOfRooms(getArguments().getLong("rooms"));
+            as.setMinPrice(getArguments().getLong("minPrice"));
+            as.setMaxPrice(getArguments().getLong("maxPrice"));
+            searchAdverts(as);
+        }
+
         if(advertiseList != null) {
             advertiseAdapter = new AdvertiseAdapter(advertiseList, getContext());
         }
@@ -172,16 +181,7 @@ public class AdvertiseFragment extends Fragment {
 
     //TODO retrofit getSales
     public void getSalesList() {
-       /* User u= new User("Zerina","1234","Zerina","Dragnic","zdragnic@gmail.com","+38762554678");
-        City c = new City("Sarajevo");
-        Location l = new Location("Pofalici",c);
-        Advertise a = new Advertise("Sale","Opis opis",6000,87.87,"Sale","House",23,3,"Avde Hume",u,l);
-        Advertise b = new Advertise("Sale","Opis opis",100,80,"Sale","House",23,3,"Avde Hume",u,l);
-        Advertise d = new Advertise("Sale","Opis opis",5000,40,"Sale","House",23,3,"Avde Hume",u,l);
 
-        advertiseList.add(a);
-        advertiseList.add(b);
-        advertiseList.add(d);*/
         AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
         try {
             final Call<List<Advertise>> call = service.getSale();
@@ -198,7 +198,6 @@ public class AdvertiseFragment extends Fragment {
                             }
                             advertiseAdapter.notifyDataSetChanged();
                         }
-
 
                     } else {
                         System.out.println(response.message());
@@ -217,8 +216,6 @@ public class AdvertiseFragment extends Fragment {
                 }
 
             });
-
-
         }
         catch(Exception e){
             Toast.makeText(getContext(),e.getMessage(),LENGTH_LONG).show();
@@ -269,7 +266,6 @@ public class AdvertiseFragment extends Fragment {
         catch(Exception e){
             Toast.makeText(getContext(),e.getMessage(),LENGTH_LONG).show();
         }
-
     }
 
     public void getPostedBy(long userId) {
@@ -290,12 +286,13 @@ public class AdvertiseFragment extends Fragment {
                             }
                             advertiseAdapter.notifyDataSetChanged();
                         }
+                        else {
+                            System.out.println(response.message());
+                            Toast.makeText(getContext(),
+                                    "No posted adverts yet",
+                                    LENGTH_LONG).show();
+                        }
 
-                    } else {
-                        System.out.println(response.message());
-                        Toast.makeText(getContext(),
-                                "Username or password not correct",
-                                LENGTH_LONG).show();
                     }
                 }
 
@@ -317,7 +314,51 @@ public class AdvertiseFragment extends Fragment {
 
     }
     //TODO search results
+    public void searchAdverts(AdvertSearch as) {
+        AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
+        try {
+            final Call<List<Advertise>> call = service.searchAdverts(as);
+            call.enqueue(new Callback<List<Advertise>>() {
+                @Override
+                public void onResponse(Call<List<Advertise>> call, Response<List<Advertise>> response) {
+                    if (response.isSuccessful()) {
 
+                        if(response.body()!=null) {
+                            for (int i = 0; i < response.body().size(); i++) {
+
+                                Advertise a = new Advertise();
+                                a = response.body().get(i);
+                                advertiseList.add(a);
+                            }
+                            advertiseAdapter.notifyDataSetChanged();
+                        }
+                        else{
+                            Toast.makeText(getContext(),
+                                    "No results for your search",
+                                    LENGTH_LONG).show();
+                        }
+                    }
+                    
+                }
+
+                @Override
+                public void onFailure(Call<List<Advertise>> call, Throwable t) {
+                    Toast.makeText(getContext(),
+                            "An error has ocurred.Try again.",
+                            LENGTH_LONG).show();
+                    Log.d("GRESKA", "onFailure: "+ t.getMessage());
+                }
+
+            });
+
+        }
+        catch(Exception e){
+            Toast.makeText(getContext(),e.getMessage(),LENGTH_LONG).show();
+            Log.d("GRESKA", "onFailure: "+ e.getMessage());
+
+        }
+
+    }
     //Sort
     private void sortDatabyPrice(boolean asc)
     {

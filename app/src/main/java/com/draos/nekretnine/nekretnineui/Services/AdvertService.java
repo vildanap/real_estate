@@ -1,5 +1,6 @@
 package com.draos.nekretnine.nekretnineui.Services;
 
+import com.draos.nekretnine.nekretnineui.Model.AdvertSearch;
 import com.draos.nekretnine.nekretnineui.Model.Advertise;
 import com.draos.nekretnine.nekretnineui.Model.User;
 import com.draos.nekretnine.nekretnineui.Model.UserAdvertInformation;
@@ -46,6 +47,9 @@ public interface AdvertService {
     Call<ResponseBody> removeFavourite(@Path("userId") long userId, @Path("advertId") long advertId);
     @GET("adverts/favorite/{userId}/{advertId}")
     Call<ResponseBody> checkIfFavourite(@Path("userId") long userId, @Path("advertId") long advertId);
+    @POST("adverts/search")
+    Call<List<Advertise>> searchAdverts(@Body AdvertSearch search);
+
 
 
 }
