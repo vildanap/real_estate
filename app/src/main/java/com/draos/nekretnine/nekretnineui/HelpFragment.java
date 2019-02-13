@@ -50,7 +50,10 @@ public class HelpFragment extends Fragment {
                 "To create an ad, you need to create an account. After creating your account, sign in with your data, after which you will be able to create your ad by clicking the 'Create advert' button.\n" +
                 "<br>" +
                 "<b>What options do I have as a registered user?</b> <br>" +
-                "As a registered user, you have the ability to post ads and view your ads, and edit your account.\n" +
+                "As a registered user, you have the ability to post and view your ads, edit your account and favourite other ads.\n" +
+                "<br>" +
+                "<b>Is it possible to edit/delete the created ad??</b> <br>" +
+                "It's possible. Click on your ad will allow you to edit / delete.\n"+
                 "<br>" +
                 "<b>How can I contact others?</b> <br>" +
                 "By leaving your personal information, other users will be able to contact you by phone number or e-mail. Similarly, by clicking on the ad you can contact real estate owners.\n" +
@@ -59,7 +62,7 @@ public class HelpFragment extends Fragment {
                 "Search for properties by going to a search shortcut at the bottom of the screen. Search is possible depending on category (rent / sale), price, city, settlement and number of rooms.\n" +
                 "<br>" +
                 "<b>I've seen a real estate that I like, but I still want to keep looking. Can I remember it?</b> <br>" +
-                "You can remember it by clicking on the 'Star' icon next to an ad / property. You can check it out later by clicking the 'Favorite' icon (Star) at the bottom of the screen."));
+                "You can remember it only if you are registered user by clicking on the 'Star' icon next to an ad / property. You can check it out later by clicking the 'Favorite' icon (Star) at the bottom of the screen."));
 
         return view;
     }

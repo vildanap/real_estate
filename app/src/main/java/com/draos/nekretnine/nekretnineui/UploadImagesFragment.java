@@ -21,10 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -62,7 +59,7 @@ public class UploadImagesFragment extends Fragment {
     ArrayList<Uri> mArrayUri;
     List<String> images;
     Long id;
-
+    ProgressBar pb;
 
     private static final int PICK_IMAGE_MULTIPLE = 1;
 
@@ -90,6 +87,8 @@ public class UploadImagesFragment extends Fragment {
         gvGallery = (GridView)view.findViewById(R.id.gv);
         btnCreate = view.findViewById(R.id.buttonCreateAd);
         btnBack = view.findViewById(R.id.buttonBack);
+        pb=view.findViewById(R.id.progressBar);
+        pb.setVisibility(View.INVISIBLE);
 
         final String title = getArguments().getString("title");
         final String description = getArguments().getString("description");
@@ -132,7 +131,7 @@ public class UploadImagesFragment extends Fragment {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
-            {
+            {   pb.setVisibility(View.VISIBLE);
                 // create list of file parts (photo, video, ...)
                 List<MultipartBody.Part> parts = new ArrayList<>();
                 // create upload service client
@@ -165,6 +164,7 @@ public class UploadImagesFragment extends Fragment {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if (response.code() == 201) {
+                                pb.setVisibility(View.INVISIBLE);
                                 Toast.makeText(getContext(),
                                         "Advert successfully created.",
                                         Toast.LENGTH_LONG).show();
@@ -175,12 +175,14 @@ public class UploadImagesFragment extends Fragment {
                                 fragmentTransaction.commit();
 
                             } else {
+                                pb.setVisibility(View.INVISIBLE);
                                 System.out.println(response.errorBody());
                             }
                         }
 
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            pb.setVisibility(View.INVISIBLE);
                             Toast.makeText(getContext(),
                                     "An error has occured. Please try again.",
                                     Toast.LENGTH_LONG).show();
@@ -194,6 +196,7 @@ public class UploadImagesFragment extends Fragment {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                 if (response.code() == 200) {
+                                    pb.setVisibility(View.INVISIBLE);
                                     Toast.makeText(getContext(),
                                             "Advert successfully updated.",
                                             Toast.LENGTH_LONG).show();
@@ -204,12 +207,14 @@ public class UploadImagesFragment extends Fragment {
                                     fragmentTransaction.commit();
 
                                 } else {
+                                    pb.setVisibility(View.INVISIBLE);
                                     System.out.println(response.errorBody());
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                pb.setVisibility(View.INVISIBLE);
                                 Toast.makeText(getContext(),
                                         "An error has occured. Please try again.",
                                         Toast.LENGTH_LONG).show();
