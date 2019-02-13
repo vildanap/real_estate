@@ -52,6 +52,8 @@ public interface AdvertService {
     Call<List<Advertise>> searchAdverts(@Body AdvertSearch search);
     @GET("/advertFiles/{advertId}")
     Call<ArrayList<String>> getAdvertFiles(@Path("advertId") long advertId);
+    @GET("/image/{advertId}")
+    Call<ResponseBody> downloadAdvertImage(@Path("advertId") long advertId);
 
 
 

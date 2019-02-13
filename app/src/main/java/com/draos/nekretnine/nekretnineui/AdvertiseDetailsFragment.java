@@ -3,6 +3,7 @@ package com.draos.nekretnine.nekretnineui;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -26,8 +27,12 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Body;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class AdvertiseDetailsFragment extends Fragment {
@@ -43,6 +48,8 @@ public class AdvertiseDetailsFragment extends Fragment {
     TextView tvDescription, tvPrice,tvArea,tvRooms,tvViews,tvPropertyType,tvAdvertType,tvSettlement,tvAddress, viewText;
     ImageView imageView;
     ArrayList<String> files = new ArrayList<String>();
+    ProgressBar pb;
+    TextView adTitle;
 
     public static AdvertiseDetailsFragment newInstance() {
         return new AdvertiseDetailsFragment();
@@ -53,6 +60,25 @@ public class AdvertiseDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Session class instance
         session = new SessionManager(this.getContext());
+        Bundle bundle = this.getArguments();
+        if(bundle != null) {
+            title = bundle.get("title").toString();
+            price = bundle.get("price").toString();
+            description = bundle.get("description").toString();
+            area=bundle.getString("area");
+            rooms=bundle.getString("rooms");
+            advertType=bundle.getString("advertType");
+            address = bundle.getString("address");
+            settlement = bundle.getString("settlement");
+            propertyType = bundle.getString("propertyType");
+            id=bundle.getLong("id");
+            userId=bundle.getLong("userId");
+            phone = bundle.getString("phone");
+            email = bundle.getString("email");
+            viewsNumber = bundle.getString("views");
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
+        }
+        //getFiles(id);
     }
 
     @Override
@@ -61,7 +87,6 @@ public class AdvertiseDetailsFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_advertise_details, container, false);
-        TextView adTitle = view.findViewById(R.id.textView_adTitle);
 
         final int imgStarFull = R.drawable.ic_star;
         final int imgStarBorder = R.drawable.ic_star_border;
@@ -79,36 +104,76 @@ public class AdvertiseDetailsFragment extends Fragment {
         favoritebtn = view.findViewById(R.id.imageButtonFavorite);
         viewText = view.findViewById(R.id.textView31);
         imageView = view.findViewById(R.id.imageView3);
+        adTitle = view.findViewById(R.id.textView_adTitle);
+        pb=view.findViewById(R.id.progressBarDetails);
+        pb.setVisibility(View.INVISIBLE);
+
+        //SLIKA
+        AdvertService service1= RealEstateServiceGenerator.createService(AdvertService.class);
+        final Call<ResponseBody> call = service1.downloadAdvertImage(id);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()) {
+                    try {
+                        Log.d("DownloadImage", "Reading and writing file");
+                        InputStream in = null;
+                        FileOutputStream out = null;
+                        try {
+                            ResponseBody body = response.body();
+                            in = body.byteStream();
+                            out = new FileOutputStream(getContext().getExternalFilesDir(null) + File.separator + "AndroidTutorialPoint.jpg");
+                            int c;
+
+                            while ((c = in.read()) != -1) {
+                                pb.setVisibility(View.VISIBLE);
+                                out.write(c);
+                            }
+                        }
+                        catch (IOException e) {
+                            Log.d("DownloadImage",e.toString());
+                        }
+                        finally {
+                            if (in != null) {
+                                in.close();
+                            }
+                            if (out != null) {
+                                out.close();
+                            }
+                        }
+
+                        int width, height;
+                        Bitmap bMap = BitmapFactory.decodeFile(getContext().getExternalFilesDir(null) + File.separator + "AndroidTutorialPoint.jpg");
+                        width = 2*bMap.getWidth();
+                        height = 6*bMap.getHeight();
+                        Bitmap bMap2 = Bitmap.createScaledBitmap(bMap, width, height, false);
+                        imageView.setImageBitmap(bMap2);
+                        pb.setVisibility(View.INVISIBLE);
 
 
-        Bundle bundle = this.getArguments();
-        if(bundle != null) {
-            title = bundle.get("title").toString();
-            price = bundle.get("price").toString();
-            description = bundle.get("description").toString();
-            area=bundle.getString("area");
-            rooms=bundle.getString("rooms");
-            advertType=bundle.getString("advertType");
-            address = bundle.getString("address");
-            settlement = bundle.getString("settlement");
-            propertyType = bundle.getString("propertyType");
-            id=bundle.getLong("id");
-            userId=bundle.getLong("userId");
-            phone = bundle.getString("phone");
-            email = bundle.getString("email");
-            viewsNumber = bundle.getString("views");
-            adTitle.setText(title);
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
-        }
+                    } catch (IOException e) {
+                        Log.d("DownloadImage",e.toString());
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody>  call, Throwable t) {
+                Toast.makeText(getContext(),
+                        "An error has ocurred. Try again.",
+                        Toast.LENGTH_LONG).show();
+                        pb.setVisibility(View.INVISIBLE);
 
+            }
+        });
         //File f = new File("file:///C:/tmpFiles/IMG_20190205_205703.jpg");
         //Glide.with(this).load("file:///C:/tmpFiles/IMG_20190205_205703.jpg").into(imageView);
-        getFiles(id);
+        //getFiles(id);
 
         //postavljanje oglasa
         //  tvViews.setText(viewsNumber);
         System.out.println(viewsNumber);
-        viewText.setText("Reviewed "+viewsNumber+ " times");
+        adTitle.setText(title);
+        viewText.setText("Reviewed "+ viewsNumber+ " times");
         tvPrice.setText(price + " BAM");
         tvDescription.setText(description);
         tvArea.setText(area + " squares");
@@ -388,11 +453,11 @@ public class AdvertiseDetailsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
     }
 
-    public void getFiles( long advertId){
+    private void getFiles( long advertId){
         //slika
         AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
         try {
-            final Call<ArrayList<String>> call = service.getAdvertFiles(id);
+            final Call<ArrayList<String>> call = service.getAdvertFiles(advertId);
             call.enqueue(new Callback<ArrayList<String>>() {
                 @Override
                 public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
@@ -404,9 +469,8 @@ public class AdvertiseDetailsFragment extends Fragment {
                                 Log.d("Ime fajla", response.body().get(i));
                             }
                             Log.d("Duzina liste", String.valueOf(files.size()));
-
                             System.out.println(response.body());//convert reponse to string]
-                            //files = response.body();
+
                         } else {
                             System.out.println(response.message());
                             Toast.makeText(getContext(),
@@ -415,12 +479,13 @@ public class AdvertiseDetailsFragment extends Fragment {
                         }
                     }
                 }
-
                 @Override
                 public void onFailure(Call<ArrayList<String>> call, Throwable t) {
                     Toast.makeText(getContext(),
                             "An error has ocurred.Try again.",
                             Toast.LENGTH_LONG).show();
+                    pb.setVisibility(View.INVISIBLE);
+
                 }
             });
         }
