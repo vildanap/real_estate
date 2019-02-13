@@ -11,6 +11,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface AdvertService {
@@ -49,6 +50,9 @@ public interface AdvertService {
     Call<ResponseBody> checkIfFavourite(@Path("userId") long userId, @Path("advertId") long advertId);
     @POST("adverts/search")
     Call<List<Advertise>> searchAdverts(@Body AdvertSearch search);
+    @GET("/advertFiles/{advertId}")
+    Call<ArrayList<String>> getAdvertFiles(@Path("advertId") long advertId);
+
 
 
 

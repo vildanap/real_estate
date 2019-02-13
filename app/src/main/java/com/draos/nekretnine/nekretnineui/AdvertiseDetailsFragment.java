@@ -3,6 +3,7 @@ package com.draos.nekretnine.nekretnineui;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -10,27 +11,38 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import com.bumptech.glide.Glide;
 import com.draos.nekretnine.nekretnineui.Model.Advertise;
 import com.draos.nekretnine.nekretnineui.Services.AdvertService;
 import com.draos.nekretnine.nekretnineui.Services.RealEstateServiceGenerator;
-import com.draos.nekretnine.nekretnineui.Services.UserService;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import org.w3c.dom.Text;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.io.File;
+import java.util.ArrayList;
+
 public class AdvertiseDetailsFragment extends Fragment {
+
     private AdvertiseDetailsFragment.OnFragmentInteractionListener listener;
     SessionManager session;
+    Button editAdvert,deleteAdvert;
+    ImageView adTypePhoto;
+    String title,price,description,area,rooms,advertType, propertyType, address, settlement, phone, email, viewsNumber;
+    Long id,userId;
+    Boolean isFavourite;
+    ImageButton favoritebtn,imageCell,imageEmail;
+    TextView tvDescription, tvPrice,tvArea,tvRooms,tvViews,tvPropertyType,tvAdvertType,tvSettlement,tvAddress, viewText;
+    ImageView imageView;
+    ArrayList<String> files = new ArrayList<String>();
 
     public static AdvertiseDetailsFragment newInstance() {
         return new AdvertiseDetailsFragment();
@@ -43,13 +55,6 @@ public class AdvertiseDetailsFragment extends Fragment {
         session = new SessionManager(this.getContext());
     }
 
-    Button editAdvert,deleteAdvert;
-    ImageView adTypePhoto;
-    String title,price,description,area,rooms,advertType, propertyType, address, settlement, phone, email, viewsNumber;
-    Long id,userId;
-    Boolean isFavourite;
-    ImageButton favoritebtn,imageCell,imageEmail;
-    TextView tvDescription, tvPrice,tvArea,tvRooms,tvViews,tvPropertyType,tvAdvertType,tvSettlement,tvAddress, viewText;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,6 +78,9 @@ public class AdvertiseDetailsFragment extends Fragment {
         imageEmail = view.findViewById(R.id.imageButton3Email);
         favoritebtn = view.findViewById(R.id.imageButtonFavorite);
         viewText = view.findViewById(R.id.textView31);
+        imageView = view.findViewById(R.id.imageView3);
+
+
         Bundle bundle = this.getArguments();
         if(bundle != null) {
             title = bundle.get("title").toString();
@@ -92,6 +100,11 @@ public class AdvertiseDetailsFragment extends Fragment {
             adTitle.setText(title);
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
         }
+
+        //File f = new File("file:///C:/tmpFiles/IMG_20190205_205703.jpg");
+        //Glide.with(this).load("file:///C:/tmpFiles/IMG_20190205_205703.jpg").into(imageView);
+        getFiles(id);
+
         //postavljanje oglasa
       //  tvViews.setText(viewsNumber);
         System.out.println(viewsNumber);
@@ -373,6 +386,47 @@ public class AdvertiseDetailsFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
+    }
+
+    public void getFiles( long advertId){
+        //slika
+        AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
+        try {
+            final Call<ArrayList<String>> call = service.getAdvertFiles(id);
+            call.enqueue(new Callback<ArrayList<String>>() {
+                @Override
+                public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            for (int i = 0; i < response.body().size(); i++) {
+                                String s = new String(response.body().get(i));
+                                files.add(s);
+                                Log.d("Ime fajla", response.body().get(i));
+                            }
+                            Log.d("Duzina liste", String.valueOf(files.size()));
+
+                            System.out.println(response.body());//convert reponse to string]
+                            //files = response.body();
+                        } else {
+                            System.out.println(response.message());
+                            Toast.makeText(getContext(),
+                                    "Try again",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<String>> call, Throwable t) {
+                    Toast.makeText(getContext(),
+                            "An error has ocurred.Try again.",
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        catch (Exception e){
+            Log.d("Greska slike: ",e.getMessage());
+        }
     }
 
 }

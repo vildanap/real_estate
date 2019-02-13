@@ -338,7 +338,7 @@ public class AdvertiseFragment extends Fragment {
                                     LENGTH_LONG).show();
                         }
                     }
-                    
+
                 }
 
                 @Override
