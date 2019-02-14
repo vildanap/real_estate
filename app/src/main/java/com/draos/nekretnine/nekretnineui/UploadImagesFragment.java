@@ -60,6 +60,7 @@ public class UploadImagesFragment extends Fragment {
     List<String> images;
     Long id;
     ProgressBar pb;
+    Boolean pickedImage = false;
 
     private static final int PICK_IMAGE_MULTIPLE = 1;
 
@@ -102,6 +103,11 @@ public class UploadImagesFragment extends Fragment {
         final Long user = getArguments().getLong("userId");
         final String type = getArguments().getString("type");
         id = getArguments().getLong("id");
+
+        if(!pickedImage){
+            btnCreate.setEnabled(false);
+        }
+
       if(type!=null) {
             btnCreate.setText("UPDATE");
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Update Advert");
@@ -130,104 +136,101 @@ public class UploadImagesFragment extends Fragment {
         //Create
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {   pb.setVisibility(View.VISIBLE);
-                // create list of file parts (photo, video, ...)
-                List<MultipartBody.Part> parts = new ArrayList<>();
-                // create upload service client
-                AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
-                if (mArrayUri != null) {
-                    // create part for file (photo, video, ...)
-                    for (int i = 0; i < images.size(); i++) {
-                        parts.add(prepareFilePart (images.get(i)));
+            public void onClick(View v) {
+
+                    pb.setVisibility(View.VISIBLE);
+                    // create list of file parts (photo, video, ...)
+                    List<MultipartBody.Part> parts = new ArrayList<>();
+                    // create upload service client
+                    AdvertService service = RealEstateServiceGenerator.createService(AdvertService.class);
+                    if (mArrayUri != null) {
+                        // create part for file (photo, video, ...)
+                        for (int i = 0; i < images.size(); i++) {
+                            parts.add(prepareFilePart(images.get(i)));
+                        }
                     }
-                }
-                // create a map of data to pass along
-                // finally, execute the request
-                try {
-                    JSONObject ad = new JSONObject();
-                    ad.put("title", title);
-                    ad.put("description", description);
-                    ad.put("advertType",aType);
-                    ad.put("propertyType",pType);
-                    ad.put("price",price);
-                    ad.put("area",area);
-                    ad.put("location",location);
-                    ad.put("userId",user);
-                    ad.put("address",address);
-                    ad.put("viewsCount",0);
-                    ad.put("numberOfRooms",rooms);
+                    // create a map of data to pass along
+                    // finally, execute the request
+                    try {
+                        JSONObject ad = new JSONObject();
+                        ad.put("title", title);
+                        ad.put("description", description);
+                        ad.put("advertType", aType);
+                        ad.put("propertyType", pType);
+                        ad.put("price", price);
+                        ad.put("area", area);
+                        ad.put("location", location);
+                        ad.put("userId", user);
+                        ad.put("address", address);
+                        ad.put("viewsCount", 0);
+                        ad.put("numberOfRooms", rooms);
 
-                    if(type==null){
-                    final Call<ResponseBody> call = service.createAdvert(parts,RequestBody.create(MediaType.parse("multipart/form-data"), ad.toString()));
-                    call.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            if (response.code() == 201) {
-                                pb.setVisibility(View.INVISIBLE);
-                                Toast.makeText(getContext(),
-                                        "Advert successfully created.",
-                                        Toast.LENGTH_LONG).show();
+                        if (type == null) {
+                            final Call<ResponseBody> call = service.createAdvert(parts, RequestBody.create(MediaType.parse("multipart/form-data"), ad.toString()));
+                            call.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.code() == 201) {
+                                        pb.setVisibility(View.INVISIBLE);
+                                        Toast.makeText(getContext(),
+                                                "Advert successfully created.",
+                                                Toast.LENGTH_LONG).show();
 
-                                MyAdvertsFragment newfragment = new MyAdvertsFragment();
-                                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
-                                fragmentTransaction.commit();
+                                        MyAdvertsFragment newfragment = new MyAdvertsFragment();
+                                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                        fragmentTransaction.replace(((ViewGroup) (getView().getParent())).getId(), newfragment);
+                                        fragmentTransaction.commit();
 
-                            } else {
-                                pb.setVisibility(View.INVISIBLE);
-                                System.out.println(response.errorBody());
-                            }
-                        }
+                                    } else {
+                                        pb.setVisibility(View.INVISIBLE);
+                                        System.out.println(response.errorBody());
+                                    }
+                                }
 
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            pb.setVisibility(View.INVISIBLE);
-                            Toast.makeText(getContext(),
-                                    "An error has occured. Please try again.",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-                }
-                else {
-                        final Call<ResponseBody> call = service.updateAdvert(id,parts,RequestBody.create(MediaType.parse("multipart/form-data"), ad.toString()));
-                        call.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                if (response.code() == 200) {
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
                                     pb.setVisibility(View.INVISIBLE);
                                     Toast.makeText(getContext(),
-                                            "Advert successfully updated.",
+                                            "An error has occured. Please try again.",
                                             Toast.LENGTH_LONG).show();
-
-                                    MyAdvertsFragment newfragment = new MyAdvertsFragment();
-                                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                    fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), newfragment);
-                                    fragmentTransaction.commit();
-
-                                } else {
-                                    pb.setVisibility(View.INVISIBLE);
-                                    System.out.println(response.errorBody());
                                 }
-                            }
+                            });
 
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                pb.setVisibility(View.INVISIBLE);
-                                Toast.makeText(getContext(),
-                                        "An error has occured. Please try again.",
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        });
+                        } else {
+                            final Call<ResponseBody> call = service.updateAdvert(id, parts, RequestBody.create(MediaType.parse("multipart/form-data"), ad.toString()));
+                            call.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.code() == 200) {
+                                        pb.setVisibility(View.INVISIBLE);
+                                        Toast.makeText(getContext(),
+                                                "Advert successfully updated.",
+                                                Toast.LENGTH_LONG).show();
 
+                                        MyAdvertsFragment newfragment = new MyAdvertsFragment();
+                                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                        fragmentTransaction.replace(((ViewGroup) (getView().getParent())).getId(), newfragment);
+                                        fragmentTransaction.commit();
+
+                                    } else {
+                                        pb.setVisibility(View.INVISIBLE);
+                                        System.out.println(response.errorBody());
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    pb.setVisibility(View.INVISIBLE);
+                                    Toast.makeText(getContext(),
+                                            "An error has occured. Please try again.",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
-
-                }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
         });
 
@@ -320,7 +323,7 @@ public class UploadImagesFragment extends Fragment {
                     mlp.setMargins(0, gvGallery.getHorizontalSpacing(), 0, 0);
 
                 }*/
-                 if (data.getClipData() != null) {
+                 if (data.getClipData() != null && data.getClipData().getItemCount()<=3) {
                         ClipData mClipData = data.getClipData();
                         mArrayUri = new ArrayList<Uri>();
                         images = new ArrayList<>();
@@ -351,10 +354,14 @@ public class UploadImagesFragment extends Fragment {
 
                         }
                         Log.v("LOG_TAG", "Selected Images" + mArrayUri.size());
+                        pickedImage = true;
+                        btnCreate.setEnabled(true);
                     }
 
             } else {
-                Toast.makeText(getContext(), "You haven't picked Image",LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Pick between 1 and 3 images.",LENGTH_LONG).show();
+                pickedImage = false;
+                btnCreate.setEnabled(false);
             }
         } catch (Exception e) {
             Toast.makeText(getContext(), "Something went wrong", LENGTH_LONG).show();
@@ -362,49 +369,6 @@ public class UploadImagesFragment extends Fragment {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
-    }
-    private boolean DownloadImage(ResponseBody body) {
-        try {
-            Log.d("DownloadImage", "Reading and writing file");
-            InputStream in = null;
-            FileOutputStream out = null;
-
-            try {
-                in = body.byteStream();
-                out = new FileOutputStream(getActivity().getExternalFilesDir(null) + File.separator + "a.jpg");
-                int c;
-
-                while ((c = in.read()) != -1) {
-                    out.write(c);
-                }
-            }
-            catch (IOException e) {
-                Log.d("DownloadImage",e.toString());
-                return false;
-            }
-            finally {
-                if (in != null) {
-                    in.close();
-                }
-                if (out != null) {
-                    out.close();
-                }
-            }
-
-            int width, height;
-            ImageView image = (ImageView) getView().findViewById(R.id.imageView);
-            Bitmap bMap = BitmapFactory.decodeFile(getActivity().getExternalFilesDir(null) + File.separator + "a.jpg");
-            width = bMap.getWidth();
-            height = bMap.getHeight();
-            Bitmap bMap2 = Bitmap.createScaledBitmap(bMap, width, height, false);
-            image.setImageBitmap(bMap2);
-
-            return true;
-
-        } catch (IOException e) {
-            Log.d("DownloadImage",e.toString());
-            return false;
-        }
     }
 
     @NonNull

@@ -31,16 +31,22 @@ public class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.MyVi
     }
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Advertise movie = advertiseList.get(position);
-        holder.adTitle.setText(movie.getTitle());
-        holder.adPrice.setText(String.valueOf(movie.getPrice())+ " BAM");
-        holder.adArea.setText(String.valueOf(movie.getArea()) + " squares");
+        Advertise advert = advertiseList.get(position);
+        holder.adTitle.setText(advert.getTitle());
+        holder.adPrice.setText(String.valueOf(advert.getPrice())+ " BAM");
+        holder.adArea.setText(String.valueOf(advert.getArea()) + " squares");
+        if(advert.getAdvertType().equals("Sale")){
         holder.imageView.setImageResource(R.drawable.sale);
-        if(movie.getDescription().length()>140) {
-            holder.adDescription.setText(movie.getDescription().substring(0, 140)+ "...");
+        }
+        else{
+        holder.imageView.setImageResource(R.drawable.rent);
+        }
+
+        if(advert.getDescription().length()>140) {
+            holder.adDescription.setText(advert.getDescription().substring(0, 140)+ "...");
         }
         else {
-            holder.adDescription.setText(movie.getDescription());
+            holder.adDescription.setText(advert.getDescription());
         }
         }
     @Override

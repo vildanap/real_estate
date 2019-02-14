@@ -133,42 +133,42 @@ public class SearchFragment extends Fragment {
                 //Put the value
                 Bundle args = new Bundle();
                 args.putString("Search", "Search");
-                if(sale == true && rent==true){
-                    args.putLong("advertType", 3);
+                if(sale == false && rent == false){
+                    Toast.makeText(getContext(),"Please check at least one advert type (sales/rentals).", Toast.LENGTH_LONG).show();
                 }
-                else if(sale == true && rent == false){
-                    args.putLong("advertType", 2);
-                }
-                else if(sale == false && rent == true){
-                    args.putLong("advertType", 1);
-                }
+                else {
+                    if (sale == true && rent == true) {
+                        args.putLong("advertType", 3);
+                    } else if (sale == true && rent == false) {
+                        args.putLong("advertType", 2);
+                    } else if (sale == false && rent == true) {
+                        args.putLong("advertType", 1);
+                    }
 
-                args.putLong("minPrice", minPrice.longValue());
-                args.putLong("maxPrice", maxPrice.longValue());
-                args.putLong("rooms", rooms);
+                    args.putLong("minPrice", minPrice.longValue());
+                    args.putLong("maxPrice", maxPrice.longValue());
+                    args.putLong("rooms", rooms);
 
-                if((settlement == 0 && city==0) || settlement==0){
-                    args.putLong("settlement", 0);
-                }
-                else if (city==1){
-                    args.putLong("settlement", settlement);
-                }
-                else if(city == 2){
-                    args.putLong("settlement", settlement + 3);
+                    if ((settlement == 0 && city == 0) || settlement == 0) {
+                        args.putLong("settlement", 0);
+                    } else if (city == 1) {
+                        args.putLong("settlement", settlement);
+                    } else if (city == 2) {
+                        args.putLong("settlement", settlement + 3);
 
-                }
-                else if (city == 3){
-                    args.putLong("settlement", settlement+ 6);
-                }
-                args.putLong("city", city);
-                Log.d("Searchhh", args.toString());
-                fragment.setArguments(args);
+                    } else if (city == 3) {
+                        args.putLong("settlement", settlement + 6);
+                    }
+                    args.putLong("city", city);
+                    Log.d("Searchhh", args.toString());
+                    fragment.setArguments(args);
 
-                //Inflate the fragment
-                AppCompatActivity activity = (AppCompatActivity) getView().getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment,"Tag_Search")
-                        .addToBackStack("Tag_Search")
-                        .commitAllowingStateLoss();
+                    //Inflate the fragment
+                    AppCompatActivity activity = (AppCompatActivity) getView().getContext();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment, "Tag_Search")
+                            .addToBackStack("Tag_Search")
+                            .commitAllowingStateLoss();
+                }
             }
         });
 
