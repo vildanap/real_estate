@@ -106,7 +106,7 @@ public class AdvertiseDetailsFragment extends Fragment {
         imageView = view.findViewById(R.id.imageView3);
         adTitle = view.findViewById(R.id.textView_adTitle);
         pb=view.findViewById(R.id.progressBarDetails);
-        pb.setVisibility(View.INVISIBLE);
+        pb.setVisibility(View.VISIBLE);
 
         //SLIKA
         AdvertService service1= RealEstateServiceGenerator.createService(AdvertService.class);
@@ -115,6 +115,8 @@ public class AdvertiseDetailsFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()) {
+                    pb.setVisibility(View.INVISIBLE);
+
                     try {
                         Log.d("DownloadImage", "Reading and writing file");
                         InputStream in = null;
@@ -126,7 +128,6 @@ public class AdvertiseDetailsFragment extends Fragment {
                             int c;
 
                             while ((c = in.read()) != -1) {
-                                pb.setVisibility(View.VISIBLE);
                                 out.write(c);
                             }
                         }
@@ -147,12 +148,14 @@ public class AdvertiseDetailsFragment extends Fragment {
                         width = 2*bMap.getWidth();
                         height = 6*bMap.getHeight();
                         Bitmap bMap2 = Bitmap.createScaledBitmap(bMap, width, height, false);
+                        bMap2.compress(Bitmap.CompressFormat.JPEG, 100, out);
+
                         imageView.setImageBitmap(bMap2);
-                        pb.setVisibility(View.INVISIBLE);
 
 
                     } catch (IOException e) {
                         Log.d("DownloadImage",e.toString());
+
                     }
                 }
             }
