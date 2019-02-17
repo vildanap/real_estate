@@ -367,7 +367,7 @@ public class AdvertiseFragment extends Fragment {
         {
             Collections.sort(advertiseList, new Comparator<Advertise>() {
                 public int compare(Advertise a1, Advertise a2) {
-                    return String.valueOf(a1.getPrice()).compareTo(String.valueOf(a2.getPrice()));
+                    return Double.compare(a1.getPrice(), a2.getPrice());
                 }
             });
         }
@@ -386,7 +386,7 @@ public class AdvertiseFragment extends Fragment {
         {
             Collections.sort(advertiseList, new Comparator<Advertise>() {
                 public int compare(Advertise a1, Advertise a2) {
-                    return String.valueOf(a1.getArea()).compareTo(String.valueOf(a2.getArea()));
+                    return Double.compare(a1.getArea(), a2.getArea());
                 }
             });
         }
