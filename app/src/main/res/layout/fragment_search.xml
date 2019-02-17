@@ -8,16 +8,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/linearLayout3" android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-            android:layout_marginTop="3dp" app:layout_constraintTop_toBottomOf="@+id/textView20"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:id="@+id/linearLayout3"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp">
         <TextView
                 android:text="*Advert type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/textView20"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp" android:paddingRight="20dp"/>
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" android:paddingRight="15dp"/>
         <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

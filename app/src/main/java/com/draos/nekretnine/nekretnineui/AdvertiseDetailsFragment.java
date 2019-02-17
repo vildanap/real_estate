@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
-import com.bumptech.glide.Glide;
 import com.draos.nekretnine.nekretnineui.Model.Advertise;
 import com.draos.nekretnine.nekretnineui.Services.AdvertService;
 import com.draos.nekretnine.nekretnineui.Services.RealEstateServiceGenerator;
