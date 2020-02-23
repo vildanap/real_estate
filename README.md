@@ -35,4 +35,4 @@ mvnw clean package
 java -jar \target\nwt2_ms_location-0.0.1-SNAPSHOT.jar
 ```
 ### How to check if it is working?
-After running microservices, open the database and check whether the tables were created
+After running application, open the database and check whether the tables were created
